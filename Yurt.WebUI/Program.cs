@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Yurt.BL.Abstract;
+using Yurt.BL.Concrete;
 using Yurt.Entites.Context;
 
 namespace Yurt.WebUI
@@ -11,9 +13,11 @@ namespace Yurt.WebUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
             builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("yurt")));
 
+
+
+            builder.Services.AddScoped<IOdaManager, OdaManager>();
 
             var app = builder.Build();
 
@@ -29,7 +33,7 @@ namespace Yurt.WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

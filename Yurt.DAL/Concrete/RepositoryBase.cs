@@ -9,7 +9,7 @@ namespace Yurt.DAL.Concrete
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity, new()
     {
-        protected SqlDbContext db;
+        private readonly SqlDbContext db;
         public RepositoryBase()
         {
             db = new SqlDbContext();
@@ -40,7 +40,7 @@ namespace Yurt.DAL.Concrete
         }
 
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
-         => await (filter != null ? Table.ToListAsync() : Table.Where(filter).ToListAsync());
+         => await (filter == null ? Table.ToListAsync() : Table.Where(filter).ToListAsync());
 
         public async Task<T> GetByIdAsync(int id)
             => await Table.FindAsync(id);

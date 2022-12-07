@@ -1,0 +1,36 @@
+﻿
+
+@{
+    ViewData["Title"] = "Odalar";
+}
+
+<h1>Oda Index</h1>
+
+@model ICollection<Oda>
+
+<a class="btn btn-primary" asp-action="Create" asp-controller="Oda" asp-area="Personel">Yeni Oda Ekle</a>
+<table class="table table-hower">
+    <theader>
+        <tr>
+            <td>Id</td>
+            <td>Oda No</td>
+            <td>Kapasite</td>
+            <td></td>
+        </tr>
+    </theader>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.OdaNo</td>
+                <td>@item.Kapasite</td>
+                
+                <td>
+                    <a asp-action="Update" asp-controller="Urun" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
+                    <a asp-action="Delete" asp-controller="Urun" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
