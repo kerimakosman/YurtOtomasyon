@@ -7,29 +7,28 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
     [Area("Personel")]
     public class OdaController : Controller
     {
-        private readonly IOdaManager odaManager;
+        private readonly IOdaManager _odaManager;
 
         public OdaController(IOdaManager odaManager)
         {
-            this.odaManager = odaManager;
+            _odaManager = odaManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var liste = await odaManager.GetAllAsync();
+            var liste = await _odaManager.ListOda();
             return View(liste);
         }
 
         public IActionResult Create()
         {
-            Oda oda = new Oda();
-            return View(oda);
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Oda oda)
         {
-            await odaManager.AddAsync(oda);
+            //await odaManager.AddAsync(oda);
             return RedirectToAction("Index");
 
         }

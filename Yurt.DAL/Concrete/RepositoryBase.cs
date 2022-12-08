@@ -9,12 +9,12 @@ namespace Yurt.DAL.Concrete
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity, new()
     {
-        private readonly SqlDbContext db;
-        public RepositoryBase()
+        private readonly SqlDbContext _db;
+        public RepositoryBase(SqlDbContext db)
         {
-            db = new SqlDbContext();
+            _db = db;
         }
-        public DbSet<T> Table => db.Set<T>();
+        public DbSet<T> Table => _db.Set<T>();
 
         public async Task<bool> AddAsync(T entity)
         {
@@ -40,7 +40,9 @@ namespace Yurt.DAL.Concrete
         }
 
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
-         => await (filter == null ? Table.ToListAsync() : Table.Where(filter).ToListAsync());
+         => filter == null
+            ? await Table.ToListAsync()
+            : await Table.Where(filter).ToListAsync();
 
         public async Task<T> GetByIdAsync(int id)
             => await Table.FindAsync(id);
@@ -51,7 +53,7 @@ namespace Yurt.DAL.Concrete
 
 
         public async Task<int> SaveAsync()
-        => await db.SaveChangesAsync();
+        => await _db.SaveChangesAsync();
 
     }
 }

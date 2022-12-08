@@ -2,7 +2,9 @@
 
 namespace Yurt.BL.Abstract
 {
-    public interface IOdaManager : IBaseManager<Oda>
+    public interface IOdaManager
     {
+        Task<IList<Oda>> ListOda();
+        Task<bool> CreateOda(Oda oda);
     }
 }
