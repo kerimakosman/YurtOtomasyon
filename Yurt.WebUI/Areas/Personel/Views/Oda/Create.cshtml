@@ -1,0 +1,30 @@
+﻿@using Yurt.BL.ViewModels.OdaVM;
+@model OdaCreateVM
+
+<div class="card">
+    <div class="card-header">
+        <h3>Yeni Oda Ekle</h3>
+        
+    </div>
+    <div class="card-body">
+        <form method="post" asp-controller="Oda" asp-action="Create">
+            <div>
+                <label asp-for="OdaNo">OdaNo</label>
+                <input asp-for="OdaNo" />
+            
+                <label asp-for="Kapasite">Kapasite</label>
+                <input asp-for="Kapasite" />
+                <button type="submit" class="btn btn-success">Kaydet</button>
+            </div >
+            <div><span asp-validation-for="OdaNo" class="text text-danger fw-bold"></span></div>
+            <div><span asp-validation-for="Kapasite" class="text text-danger fw-bold"></span></div>
+            <div asp-validation-summary="ModelOnly" class="text text-danger fw-bold"></div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}

@@ -1,10 +1,9 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "Odalar";
 }
 
-<h1>Oda Index</h1>
+<h1>ODALAR</h1>
+<hr />
 
 @model ICollection<Oda>
 
@@ -12,10 +11,10 @@
 <table class="table table-hower">
     <theader>
         <tr>
-            <td>Id</td>
-            <td>Oda No</td>
-            <td>Kapasite</td>
-            <td></td>
+            <th>Id</th>
+            <th>Oda No</th>
+            <th>Kapasite</th>
+            <th></th>
         </tr>
     </theader>
     <tbody>
@@ -25,7 +24,7 @@
                 <td>@item.Id</td>
                 <td>@item.OdaNo</td>
                 <td>@item.Kapasite</td>
-                
+
                 <td>
                     <a asp-action="Update" asp-controller="Urun" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
                     <a asp-action="Delete" asp-controller="Urun" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
