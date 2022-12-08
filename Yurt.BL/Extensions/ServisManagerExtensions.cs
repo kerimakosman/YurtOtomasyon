@@ -19,6 +19,9 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IOgrenciManager, OgrenciManager>();
             services.AddScoped<IOgrenciRepository, OgrenciRepository>();
 
+            services.AddScoped<IVeliManager, VeliManager>();
+            services.AddScoped<IVeliRepository, VeliRepository>();
+
             return services;
         }
     }
