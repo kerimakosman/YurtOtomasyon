@@ -10,6 +10,7 @@ namespace Yurt.Entites.Context
 
         public DbSet<Ogrenci> Ogrenciler { get; set; }
         public DbSet<Oda> Odalar { get; set; }
+        public DbSet<Veli> Veliler { get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=YurtOtomasyon;Trusted_Connection=true");

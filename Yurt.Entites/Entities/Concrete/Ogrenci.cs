@@ -4,6 +4,10 @@ namespace Yurt.Entites.Entities.Concrete
 {
     public class Ogrenci : BaseEntity
     {
+        public Ogrenci()
+        {
+            OgrenciVelileri = new HashSet<Veli>();
+        }
         public string OgrenciAdi { get; set; }
         public string OgrenciSoyadi { get; set; }
         public string? Gsm { get; set; }
@@ -12,6 +16,6 @@ namespace Yurt.Entites.Entities.Concrete
         public bool Cinsiyet { get; set; }
         public DateTime? DogumTarihi { get; set; }
 
-
+        public ICollection<Veli> OgrenciVelileri { get; set; }
     }
 }
