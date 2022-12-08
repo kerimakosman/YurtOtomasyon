@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Yurt.BL.Abstract;
-using Yurt.Entites.Entities.Concrete;
+using Yurt.BL.ViewModels.OdaVM;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
@@ -26,11 +26,17 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Oda oda)
+        public async Task<IActionResult> Create(OdaCreateVM oda)
         {
-            //await odaManager.AddAsync(oda);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _odaManager.CreateOda(oda);
+                return RedirectToAction("Index");
+            }
+            else
+                ModelState.AddModelError("", "Kayıt Başarısız");
 
+            return View(oda);
         }
     }
 }
