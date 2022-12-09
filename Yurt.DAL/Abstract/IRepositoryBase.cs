@@ -10,7 +10,7 @@ namespace Yurt.DAL.Abstract
         Task<bool> RemoveAsync(int id);
         bool Update(T entity);
         Task<T> GetByIdAsync(int id);
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> filter = null);
+        Task<T> GetFirstAsync(Expression<Func<T, bool>> filter = null);
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter = null);
         Task<int> SaveAsync();
     }

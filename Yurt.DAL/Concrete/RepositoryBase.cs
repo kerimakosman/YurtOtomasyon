@@ -30,7 +30,7 @@ namespace Yurt.DAL.Concrete
 
         public async Task<bool> RemoveAsync(int id)
         {
-            T model = await Table.FirstOrDefaultAsync(p => p.Id == id);
+            T model = await Table.FindAsync(id);
             return Remove(model);
         }
         public bool Update(T entity)
@@ -48,7 +48,7 @@ namespace Yurt.DAL.Concrete
             => await Table.FindAsync(id);
 
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> filter = null)
+        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> filter = null)
         => await Table.Where(filter).FirstOrDefaultAsync();
 
 

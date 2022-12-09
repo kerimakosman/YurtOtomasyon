@@ -2,8 +2,9 @@
 
 namespace Yurt.BL.ViewModels.OdaVM
 {
-    public class OdaCreateVM
+    public class OdaUpdateVM
     {
+        public int Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Oda No zorunlu alan")]
         public string OdaNo { get; set; }
 

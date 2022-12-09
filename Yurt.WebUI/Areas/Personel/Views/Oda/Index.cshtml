@@ -14,6 +14,8 @@
             <th>Id</th>
             <th>Oda No</th>
             <th>Kapasite</th>
+            <th>CreateDate</th>
+            <th>UpdateDate</th>
             <th></th>
         </tr>
     </theader>
@@ -24,10 +26,13 @@
                 <td>@item.Id</td>
                 <td>@item.OdaNo</td>
                 <td>@item.Kapasite</td>
+                <td>@item.CreateDate</td>
+                <td>@item.UpdateDate</td>
+                @*<td>@item.CreateDate.ToShortDateString()</td> sadece tarih göstermek için*@
 
                 <td>
-                    <a asp-action="Update" asp-controller="Urun" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
-                    <a asp-action="Delete" asp-controller="Urun" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                    <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
+                    <a asp-action="Delete" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
                 </td>
             </tr>
         }

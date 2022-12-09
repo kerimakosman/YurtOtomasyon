@@ -30,13 +30,48 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             if (ModelState.IsValid)
             {
-                _odaManager.CreateOda(oda);
-                return RedirectToAction("Index");
+                try
+                {
+                    await _odaManager.CreateOda(oda);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    return View(oda);
+                }
             }
-            else
-                ModelState.AddModelError("", "Kayıt Başarısız");
-
+            ModelState.AddModelError("", "Kayıt Başarısız");
             return View(oda);
+        }
+        public async Task<IActionResult> Update(int id)
+        {
+            var oda = await _odaManager.GetByIdAsync(id);
+            return View(oda);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(OdaUpdateVM oda)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _odaManager.UpdateOda(oda);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    return View(oda);
+                }
+            }
+            ModelState.AddModelError("", "Kayıt Başarısız");
+            return View(oda);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _odaManager.RemoveOda(id);
+            return RedirectToAction("Index");
         }
     }
 }

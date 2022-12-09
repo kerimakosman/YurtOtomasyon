@@ -7,5 +7,8 @@ namespace Yurt.BL.Abstract
     {
         Task<IList<Oda>> ListOda();
         Task CreateOda(OdaCreateVM oda);
+        Task<OdaUpdateVM> GetByIdAsync(int id);
+        Task UpdateOda(OdaUpdateVM oda);
+        Task RemoveOda(int id);
     }
 }

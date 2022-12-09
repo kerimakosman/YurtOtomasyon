@@ -9,6 +9,7 @@ namespace Yurt.BL.AutoMapper
         public MyMapper()
         {
             CreateMap<Oda, OdaCreateVM>().ReverseMap();
+            CreateMap<Oda, OdaUpdateVM>().ReverseMap();
 
         }
     }

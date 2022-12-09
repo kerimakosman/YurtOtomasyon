@@ -23,10 +23,52 @@ namespace Yurt.BL.Concrete
 
         public async Task CreateOda(OdaCreateVM oda)
         {
-            var createOda = _mapper.Map<Oda>(oda);
-            await _odaRepository.AddAsync(createOda);
-            await _odaRepository.SaveAsync();
+            var firstOda = await _odaRepository.GetFirstAsync(o => o.OdaNo == oda.OdaNo);
+
+            if (firstOda != null)
+            {
+                throw new Exception("Daha önce bu oda kaydedildi");
+            }
+            else
+            {
+                var createOda = _mapper.Map<Oda>(oda);
+                await _odaRepository.AddAsync(createOda);
+                await _odaRepository.SaveAsync();
+            }
+        }
+        public async Task<OdaUpdateVM> GetByIdAsync(int id)
+        {
+            var updateOda = await _odaRepository.GetByIdAsync(id);
+            return _mapper.Map<OdaUpdateVM>(updateOda);
         }
 
+        public async Task UpdateOda(OdaUpdateVM oda)
+        {
+            var firstOda = await _odaRepository.GetFirstAsync(o => o.OdaNo == oda.OdaNo);
+            if (firstOda == null)
+            {
+                var updateOda = _mapper.Map<Oda>(oda);
+                _odaRepository.Update(updateOda);
+                await _odaRepository.SaveAsync();
+            }
+            else
+            {
+                if (firstOda.Id == oda.Id)
+                {
+                    firstOda.Kapasite = oda.Kapasite;
+                    await _odaRepository.SaveAsync();
+                }
+                else
+                {
+                    throw new Exception("Daha önce bu oda kaydedildi");
+                }
+            }
+        }
+
+        public async Task RemoveOda(int id)
+        {
+            await _odaRepository.RemoveAsync(id);
+            await _odaRepository.SaveAsync();
+        }
     }
 }
