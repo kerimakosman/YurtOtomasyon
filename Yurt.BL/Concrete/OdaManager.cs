@@ -45,23 +45,20 @@ namespace Yurt.BL.Concrete
         public async Task UpdateOda(OdaUpdateVM oda)
         {
             var firstOda = await _odaRepository.GetFirstAsync(o => o.OdaNo == oda.OdaNo);
-            if (firstOda == null)
+            if (firstOda == null || firstOda.Id == oda.Id)
             {
-                var updateOda = _mapper.Map<Oda>(oda);
-                _odaRepository.Update(updateOda);
+                var updateOda = await _odaRepository.GetByIdAsync(oda.Id);
+                //var updateOda = _mapper.Map<Oda>(oda);
+                //_odaRepository.Update(updateOda);
+                //CreateDate tekrar güncellediği için burada AutoMap kullanmaktan vazgeçtim.
+                updateOda.OdaNo = oda.OdaNo;
+                updateOda.Kapasite = oda.Kapasite;
+                updateOda.UpdateDate = DateTime.Now;
                 await _odaRepository.SaveAsync();
             }
             else
             {
-                if (firstOda.Id == oda.Id)
-                {
-                    firstOda.Kapasite = oda.Kapasite;
-                    await _odaRepository.SaveAsync();
-                }
-                else
-                {
-                    throw new Exception("Daha önce bu oda kaydedildi");
-                }
+                throw new Exception("Daha önce bu oda kaydedildi");
             }
         }
 

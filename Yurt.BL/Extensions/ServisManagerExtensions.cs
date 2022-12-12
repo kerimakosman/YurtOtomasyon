@@ -22,6 +22,10 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IVeliManager, VeliManager>();
             services.AddScoped<IVeliRepository, VeliRepository>();
 
+            services.AddScoped<IYurtKayitDetayRepository, YurtKayitDetayRepository>();
+            services.AddScoped<IYurtKayitMasterRepository, YurtKayitMasterRepository>();
+
+
             return services;
         }
     }
