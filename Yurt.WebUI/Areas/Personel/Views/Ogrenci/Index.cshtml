@@ -1,0 +1,30 @@
+﻿@using Yurt.BL.ViewModels.OgrenciVM;
+@{
+    ViewData["Title"] = "Öğrenciler";
+}
+
+<h1>ÖĞRENCİLER</h1>
+<hr />
+
+@model List<OgrenciListVM>
+
+<table class="table table-hower">
+    <theader>
+        <tr>
+            <th>Öğrenci Adı</th>
+            <th>Öğrenci Soyadı</th>
+            <th>Oda No</th>
+            <th></th>
+        </tr>
+    </theader>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OgrenciAdi</td>
+                <td>@item.OgrenciSoyadi</td>
+                <td>@item.OdaNo</td>
+            </tr>
+        }
+    </tbody>
+</table>

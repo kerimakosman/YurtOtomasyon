@@ -16,6 +16,7 @@ namespace Yurt.Entites.Entities.Concrete
         public bool Cinsiyet { get; set; }
         public DateTime? DogumTarihi { get; set; }
 
+        public YurtKayitMaster YurtKayitMaster { get; set; }
         public ICollection<Veli> OgrenciVelileri { get; set; }
     }
 }
