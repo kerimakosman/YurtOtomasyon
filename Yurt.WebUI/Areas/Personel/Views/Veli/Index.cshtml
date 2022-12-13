@@ -1,20 +1,21 @@
-﻿@using Yurt.BL.ViewModels.OgrenciVM;
+﻿@using Yurt.BL.ViewModels.VeliVM;
 @{
-    ViewData["Title"] = "Öğrenciler";
+    ViewData["Title"] = "Veliler";
 }
 
-<h1>ÖĞRENCİLER</h1>
+<h1>VELİLER</h1>
 <hr />
 
-@model List<OgrenciListVM>
+@model List<VeliListVM>
 
 
 <div class="card">
     <table class="table table-hower">
         <theader>
             <tr>
+                <th></th>
+                <th>Veli Adı-Soyadı</th>
                 <th>Öğrenci Adı-Soyadı</th>
-                <th>Oda No</th>
                 <th></th>
             </tr>
         </theader>
@@ -22,8 +23,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td class="fw-bold">@item.VeliKim</td>
+                    <td>@item.VeliAdi @item.VeliSoyadi</td>
                     <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
-                    <td>@item.OdaNo</td>
                 </tr>
             }
         </tbody>
