@@ -22,6 +22,10 @@ namespace Yurt.BL.Concrete
 
         public async Task<IList<OgrenciListVM>> ListOgrenci()
         {
+            //Odayı yakalıyor yalnız ekranda oda kısmında 
+            //system.collections.generic.list`1[<> f__anonymoustype0`1[system.string]]
+            //    hatasını veriyor. anonim tipi çeviremediğim için Query Syntax olarak çevirdim.
+
             //var ogrenci = await _ogrenciRepository.Table
             //                                     .Include(o => o.YurtKayitMaster)
             //                                     .ThenInclude(ykm => ykm.YurtKayitDetaylari)
