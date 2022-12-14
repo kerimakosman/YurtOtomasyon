@@ -13,18 +13,19 @@ namespace Yurt.BL.Extensions
         {
             services.AddAutoMapper(typeof(MyMapper));
 
-            services.AddScoped<IOdaManager, OdaManager>();
             services.AddScoped<IOdaRepository, OdaRepository>();
-
-            services.AddScoped<IOgrenciManager, OgrenciManager>();
             services.AddScoped<IOgrenciRepository, OgrenciRepository>();
-
-            services.AddScoped<IVeliManager, VeliManager>();
             services.AddScoped<IVeliRepository, VeliRepository>();
-
             services.AddScoped<IYurtKayitDetayRepository, YurtKayitDetayRepository>();
             services.AddScoped<IYurtKayitMasterRepository, YurtKayitMasterRepository>();
+            services.AddScoped<IKullaniciRepository, KullaniciRepository>();
 
+
+
+
+            services.AddScoped<IOdaManager, OdaManager>();
+            services.AddScoped<IOgrenciManager, OgrenciManager>();
+            services.AddScoped<IVeliManager, VeliManager>();
 
             return services;
         }
