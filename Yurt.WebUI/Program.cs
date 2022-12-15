@@ -12,6 +12,7 @@ namespace Yurt.WebUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("yurt")));
             builder.Services.YurtOtomasyonServiceManager();
 
@@ -45,7 +46,7 @@ namespace Yurt.WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login}/{action=Giris}/{id?}");
 
             app.Run();
         }

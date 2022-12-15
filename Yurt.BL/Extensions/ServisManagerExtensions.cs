@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Yurt.BL.Abstract;
 using Yurt.BL.AutoMapper;
 using Yurt.BL.Concrete;
@@ -12,6 +14,7 @@ namespace Yurt.BL.Extensions
         public static IServiceCollection YurtOtomasyonServiceManager(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MyMapper));
+            //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IOdaRepository, OdaRepository>();
             services.AddScoped<IOgrenciRepository, OgrenciRepository>();
@@ -26,7 +29,21 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IOdaManager, OdaManager>();
             services.AddScoped<IOgrenciManager, OgrenciManager>();
             services.AddScoped<IVeliManager, VeliManager>();
+            services.AddScoped<ILoginManager, LoginManager>();
 
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Login/Giris";
+                    options.LogoutPath = "/Login/Logout";
+                    options.Cookie.Name = "YurtOtomasyon";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.SlidingExpiration = true;
+                    options.Cookie.HttpOnly = true;
+                    options.AccessDeniedPath = new PathString("/Login/AccesDenied");
+                });
             return services;
         }
     }

@@ -17,10 +17,8 @@ namespace Yurt.Entites.Context
         public DbSet<Kullanici> Kullanicilar { get; set; }
 
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=YurtOtomasyon;Trusted_Connection=true");
-        //}
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kullanici>().HasData(
