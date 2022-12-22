@@ -7,12 +7,12 @@ namespace Yurt.Entites.Entities.Concrete
         public Oda()
         {
             YurtKayitDetaylari = new HashSet<YurtKayitDetay>();
-            //Ogrenciler = new HashSet<Ogrenci>();
         }
         public string OdaNo { get; set; }
         public byte Kapasite { get; set; }
-        public ICollection<YurtKayitDetay> YurtKayitDetaylari { get; set; }
+        public byte Doluluk { get; set; }
+        public bool OdaCinsiyet { get; set; }
 
-        //public ICollection<Ogrenci> Ogrenciler { get; set; }
+        public ICollection<YurtKayitDetay> YurtKayitDetaylari { get; set; }
     }
 }

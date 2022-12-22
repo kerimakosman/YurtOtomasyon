@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Yurt.BL.Abstract;
 using Yurt.BL.AutoMapper;
 using Yurt.BL.Concrete;
 using Yurt.DAL.Abstract;
 using Yurt.DAL.Concrete;
+using Yurt.Entites;
+using Yurt.Entites.Context;
 
 namespace Yurt.BL.Extensions
 {
@@ -15,6 +18,10 @@ namespace Yurt.BL.Extensions
         {
             services.AddAutoMapper(typeof(MyMapper));
             //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
+
+            services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
+
 
             services.AddScoped<IOdaRepository, OdaRepository>();
             services.AddScoped<IOgrenciRepository, OgrenciRepository>();
