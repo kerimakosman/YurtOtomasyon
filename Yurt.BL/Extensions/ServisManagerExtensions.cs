@@ -30,6 +30,7 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IOgrenciManager, OgrenciManager>();
             services.AddScoped<IVeliManager, VeliManager>();
             services.AddScoped<ILoginManager, LoginManager>();
+            services.AddScoped<IOgrenciKayitManager, OgrenciKayitManager>();
 
 
 
