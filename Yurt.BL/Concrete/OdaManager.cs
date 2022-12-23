@@ -67,5 +67,9 @@ namespace Yurt.BL.Concrete
             await _odaRepository.RemoveAsync(id);
             await _odaRepository.SaveAsync();
         }
+        public async Task<IList<Oda>> KızErkekListOda(bool oda)
+        {
+            return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda);
+        }
     }
 }

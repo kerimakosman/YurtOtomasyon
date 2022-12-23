@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Yurt.BL.Abstract;
 using Yurt.BL.ViewModels.OgrenciKayitVM;
 
@@ -17,27 +16,22 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
             _odaManager = odaManager;
         }
         [HttpGet]
-        public async Task<IActionResult> OgrenciInsert()
+        public IActionResult OgrenciInsert()
         {
-            await SelectListItemOda();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> OgrenciInsert(OgrenciKayitInsertVM ogrenci)
         {
             await _ogrenciKayitManager.CreateOgrenci(ogrenci);
-            await SelectListItemOda();
             return View();
         }
-
-        public async Task SelectListItemOda()
+        [HttpGet]
+        public async Task<JsonResult> SelectListOda(bool oda)
         {
-            var oda = await _odaManager.ListOda();
-            ViewBag.oda = oda.Select(o => new SelectListItem()
-            {
-                Text = o.OdaNo,
-                Value = o.Id.ToString()
-            }).ToList();
+            var kızErkekOda = await _odaManager.KızErkekListOda(oda);
+
+            return Json(kızErkekOda);
         }
     }
 }

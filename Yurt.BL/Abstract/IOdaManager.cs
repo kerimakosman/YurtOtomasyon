@@ -10,5 +10,6 @@ namespace Yurt.BL.Abstract
         Task<OdaUpdateVM> GetByIdAsync(int id);
         Task UpdateOda(OdaUpdateVM oda);
         Task RemoveOda(int id);
+        Task<IList<Oda>> KızErkekListOda(bool oda);
     }
 }

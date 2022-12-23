@@ -82,7 +82,7 @@
                             <hr>
 
                             <div class="col-md-4">
-                                <select class="form-select fw-bold" asp-for="OdaId" asp-items="@ViewBag.oda" required>
+                                <select class="form-select fw-bold" asp-for="OdaId" required>
                                     <option class="fw-bold" selected disabled value="">Oda Seciniz</option>
                                 </select>
                             </div>
@@ -100,7 +100,7 @@
 </div>
 
 
-
+@section Scripts{
 <script type="text/javascript">
     (function () {
         'use strict'
@@ -117,5 +117,31 @@
                 }, false)
             })
     })()
+
+    $(document).ready(function () {
+
+        $('input[type="radio"]').click(function () {
+            var cinsiyet = $(this).val();
+            console.log("secilen Cinsiyet :" + cinsiyet);
+            var urldef = "/Personel/OgrenciKayit/SelectListOda";
+            console.log(urldef);
+            $.ajax({
+                data:{oda:cinsiyet},
+                url: urldef,
+                method: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    $("#OdaId").children().remove();
+                    for (let key in result) {
+                            console.log(result[key].id + "=>" + result[key].odaNo)
+
+
+                            $("#OdaId").append("<option value=" + result[key].id + ">" + result[key].odaNo + "</option>");
+                    }
+                }
+            })
+        });
+    });
 </script>
+}
 
