@@ -32,6 +32,7 @@ namespace Yurt.BL.Concrete
             else
             {
                 var createOda = _mapper.Map<Oda>(oda);
+                createOda.Doluluk = oda.Kapasite;
                 await _odaRepository.AddAsync(createOda);
                 await _odaRepository.SaveAsync();
             }

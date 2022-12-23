@@ -15,7 +15,8 @@
             <th>Oda No</th>
             <th>Kapasite</th>
             <th>CreateDate</th>
-            <th>UpdateDate</th>
+            <th>Doluluk</th>
+            <th>Kız-Erkek</th>
             <th></th>
         </tr>
     </theader>
@@ -26,9 +27,9 @@
                 <td>@item.Id</td>
                 <td>@item.OdaNo</td>
                 <td>@item.Kapasite</td>
-                <td>@item.CreateDate</td>
-                <td>@item.UpdateDate</td>
-                @*<td>@item.CreateDate.ToShortDateString()</td> sadece tarih göstermek için*@
+                <td>@item.CreateDate.ToShortDateString()</td>
+                <td>@item.Doluluk</td>
+                <td>@(item.OdaCinsiyet==true? "Erkek":"Kadın")</td>
 
                 <td>
                     <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>

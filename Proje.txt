@@ -1,0 +1,9 @@
+
+
+Personel(admin)
+Kullanýcý Adý: admin  Þifre:123
+
+Öðrenci
+Kullancý Adý:    Þifre:
+
+

@@ -4,25 +4,36 @@
 <div class="card">
     <div class="card-header">
         <h3>Yeni Oda Ekle</h3>
-        
+
     </div>
     <div class="card-body">
         <form method="post" asp-controller="Oda" asp-action="Create">
             <div>
-                <label asp-for="OdaNo">OdaNo</label>
+                <label asp-for="OdaNo" class="fw-bold">OdaNo</label>
                 <input asp-for="OdaNo" />
-            
-                <label asp-for="Kapasite">Kapasite</label>
+
+                <label asp-for="Kapasite" class="fw-bold">Kapasite</label>
                 <input asp-for="Kapasite" />
-                <button type="submit" class="btn btn-success">Kaydet</button>
-            </div >
+            </div>
+            
+            <div class="form-check form-check-inline mb-3 mt-3">
+                <div><label class="fw-bold">Kız-Erkek? :</label></div>
+                <input class="form-check-input" asp-for="OdaCinsiyet" id="Erkek" type="radio" value="true" />
+                <label class="form-check-label fw-bold" asp-for="OdaCinsiyet" for="Erkek">Erkek</label>
+            </div>
+            <div class="form-check form-check-inline mb-3 mt-3">
+                <input class="form-check-input" asp-for="OdaCinsiyet" id="Kadin" type="radio" value="false" />
+                <label class="form-check-label fw-bold" asp-for="OdaCinsiyet" for="Kadin">Kadın</label>
+            </div>
             <div><span asp-validation-for="OdaNo" class="text text-danger fw-bold"></span></div>
             <div><span asp-validation-for="Kapasite" class="text text-danger fw-bold"></span></div>
+            <div><span asp-validation-for="OdaCinsiyet" class="text text-danger fw-bold"></span></div>
             <div asp-validation-summary="ModelOnly" class="text text-danger fw-bold"></div>
+<button type="submit" class="btn btn-success">Kaydet</button>
+<a asp-area="Personel" asp-controller="Oda" asp-action="Index" class="btn btn-secondary">Geri</a>
         </form>
     </div>
 </div>
-<a asp-area="Personel" asp-controller="Oda" asp-action="Index" class="btn btn-secondary">Geri</a>
 
 @section Scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

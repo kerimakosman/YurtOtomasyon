@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yurt.Entites", "Yurt.Entites\Yurt.Entites.csproj", "{5127D3F8-F692-49F3-93BE-430FE2491285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yurt.Entites", "Yurt.Entites\Yurt.Entites.csproj", "{5127D3F8-F692-49F3-93BE-430FE2491285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yurt.DAL", "Yurt.DAL\Yurt.DAL.csproj", "{A564888E-0122-44BE-9E78-19D6BDCAD41A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yurt.DAL", "Yurt.DAL\Yurt.DAL.csproj", "{A564888E-0122-44BE-9E78-19D6BDCAD41A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yurt.BL", "Yurt.BL\Yurt.BL.csproj", "{5461B8E0-D0B4-4CF3-89A6-393341745493}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yurt.BL", "Yurt.BL\Yurt.BL.csproj", "{5461B8E0-D0B4-4CF3-89A6-393341745493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yurt.WebUI", "Yurt.WebUI\Yurt.WebUI.csproj", "{FD10EBE2-BE74-40AB-B280-7A87D7EE3538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yurt.WebUI", "Yurt.WebUI\Yurt.WebUI.csproj", "{FD10EBE2-BE74-40AB-B280-7A87D7EE3538}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{A6158B21-63EF-4C02-814A-18E3E368F420}"
+	ProjectSection(SolutionItems) = preProject
+		Proje.txt = Proje.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
