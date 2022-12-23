@@ -70,7 +70,7 @@ namespace Yurt.BL.Concrete
         }
         public async Task<IList<Oda>> KızErkekListOda(bool oda)
         {
-            return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda);
+            return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda && o.Doluluk > 0);
         }
     }
 }
