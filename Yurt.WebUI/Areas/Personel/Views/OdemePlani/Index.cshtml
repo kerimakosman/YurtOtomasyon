@@ -26,6 +26,11 @@
                     <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
                     <td>@item.VeliAdi @item.VeliSoyadi</td>
                     <td>@item.OdaNo</td>
+
+                    <td>
+                        <a asp-action="CreateOdemePlani" asp-controller="OdemePlani" asp-area="Personel" asp-route-id="@item.OdemePlaniId" class="btn btn-info">OdemePlani</a>
+                        <a asp-action="#" asp-controller="#" asp-area="Personel" asp-route-id="@item.OdemePlaniId" class="btn btn-danger">X</a>
+                    </td>
                 </tr>
             }
         </tbody>

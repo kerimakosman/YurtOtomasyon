@@ -19,7 +19,6 @@
 		//Oda
 		public int OdaId { get; set; }
 		//OdemePlani
-		public int OdemePlaniId { get; set; }
-		public decimal OdenecekTutar { get; set; }
+		public decimal OdenecekTutar { get; set; } = 0;
 	}
 }

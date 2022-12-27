@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Yurt.Entites.Entities.Abstract;
+using System.Reflection;
 using Yurt.Entites.Entities.Concrete;
 
 namespace Yurt.Entites.Context
@@ -17,14 +17,18 @@ namespace Yurt.Entites.Context
         public DbSet<YurtKayitMaster> YurtKayitMasters { get; set; }
         public DbSet<YurtKayitDetay> YurtKayitDetays { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
+        public DbSet<OdemePlani> OdemePlani { get; set; }
+        public DbSet<Taksit> Taksitler { get; set; }
+        public DbSet<TaksitOdeme> TaksitOdemeleri { get; set; }
+
 
 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Kullanici>().HasData(
-                new { Id = 1, CreateDate = new DateTime(2023, 01, 01), Status = Status.Active, KullaniciAdi = "admin", Sifre = "123", Rol = "Personel" });
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
     }
 }

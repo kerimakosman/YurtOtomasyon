@@ -19,9 +19,15 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             return View(await _odemePlaniManager.ListOgrenci());
         }
+        [HttpGet("OdemePlani/{id}")]
         public async Task<IActionResult> CreateOdemePlani()
         {
             return View();
         }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateOdemePlani()
+        //{
+        //    return View();
+        //}
     }
 }

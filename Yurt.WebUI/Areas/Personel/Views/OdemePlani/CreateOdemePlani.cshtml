@@ -1,1 +1,22 @@
 ﻿<h3>CreateOdemePlani</h3>
+
+
+<div class="col-md-4">
+    <select class="form-select fw-bold" required>
+        <option class="fw-bold" selected disabled value="">Taksit Seciniz</option>
+        @for (int i = 0; i < 12; i++)
+        {
+            <option class="fw-bold" value="">@(i + 1)</option>
+        }
+    </select>
+</div>
+
+<form class="requires-validation" method="post" asp-controller="OgrenciKayit" asp-action="OgrenciInsert">
+    <h3>Öğrenci</h3>
+    <hr>
+    <div class="row">
+
+        <div class="col-md-4">
+            <input class="form-control fw-bold" type="text" placeholder="Öğrenci Adı" asp-for="OgrenciAdi" required>
+        </div>
+</form>

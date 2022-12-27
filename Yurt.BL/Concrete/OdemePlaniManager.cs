@@ -41,7 +41,7 @@ namespace Yurt.BL.Concrete
                                 OdaNo = oda.OdaNo,
                                 OdemePlaniId = op.Id
                             };
-            return await odemeList.ToListAsync();
+            return await odemeList.OrderBy(o => o.OdemePlaniId).ToListAsync();
         }
     }
 }

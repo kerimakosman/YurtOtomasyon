@@ -26,7 +26,7 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         public async Task<IActionResult> OgrenciInsert(OgrenciKayitInsertVM ogrenci)
         {
             await _ogrenciKayitManager.CreateOgrenci(ogrenci);
-            return RedirectToAction("CreateOdemePlani", "OdemePlani", new { Area = "Personel" });
+            return RedirectToAction("Index", "OdemePlani", new { Area = "Personel" });
         }
         [HttpGet]
         public async Task<JsonResult> SelectListOda(bool oda)
