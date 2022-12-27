@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
+    [Area("Personel")]
+    [Authorize(Roles = "Personel")]
     public class HomeController : Controller
     {
-        [Area("Personel")]
-        [Authorize(Roles = "Personel")]
         public IActionResult Index()
         {
             return View();

@@ -29,6 +29,7 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IYurtKayitDetayRepository, YurtKayitDetayRepository>();
             services.AddScoped<IYurtKayitMasterRepository, YurtKayitMasterRepository>();
             services.AddScoped<IKullaniciRepository, KullaniciRepository>();
+            services.AddScoped<IOdemePlaniRepository, OdemePlaniRepository>();
 
 
 
@@ -38,6 +39,7 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IVeliManager, VeliManager>();
             services.AddScoped<ILoginManager, LoginManager>();
             services.AddScoped<IOgrenciKayitManager, OgrenciKayitManager>();
+            services.AddScoped<IOdemePlaniManager, OdemePlaniManager>();
 
 
 

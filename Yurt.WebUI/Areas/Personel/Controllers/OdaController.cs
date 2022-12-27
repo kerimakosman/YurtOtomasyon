@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Yurt.BL.Abstract;
 using Yurt.BL.ViewModels.OdaVM;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
     [Area("Personel")]
+    [Authorize(Roles = "Personel")]
     public class OdaController : Controller
     {
         private readonly IOdaManager _odaManager;

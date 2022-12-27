@@ -1,0 +1,33 @@
+﻿@using Yurt.BL.ViewModels.OdemePlaniVM;
+@{
+    ViewData["Title"] = "Öğrenciler";
+}
+
+<h1>Ödeme Planı</h1>
+<hr />
+
+@model List<OdemePlaniListVM>
+
+
+<div class="card col-md-8 style=" width:60%"">
+    <table class="table table-hower">
+        <theader>
+            <tr>
+                <th>Öğrenci Adı-Soyadı</th>
+                <th>Veli Adı-Soyadı</th>
+                <th>Oda No</th>
+                <th></th>
+            </tr>
+        </theader>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
+                    <td>@item.VeliAdi @item.VeliSoyadi</td>
+                    <td>@item.OdaNo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

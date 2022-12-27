@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Yurt.BL.Abstract;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
     [Area("Personel")]
+    [Authorize(Roles = "Personel")]
     public class VeliController : Controller
     {
         private readonly IVeliManager _veliManager;

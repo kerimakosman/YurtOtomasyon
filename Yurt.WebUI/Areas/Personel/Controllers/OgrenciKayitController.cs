@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Yurt.BL.Abstract;
 using Yurt.BL.ViewModels.OgrenciKayitVM;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
     [Area("Personel")]
+    [Authorize(Roles = "Personel")]
     public class OgrenciKayitController : Controller
     {
         private readonly IOgrenciKayitManager _ogrenciKayitManager;
@@ -24,7 +26,7 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         public async Task<IActionResult> OgrenciInsert(OgrenciKayitInsertVM ogrenci)
         {
             await _ogrenciKayitManager.CreateOgrenci(ogrenci);
-            return View();
+            return RedirectToAction("CreateOdemePlani", "OdemePlani", new { Area = "Personel" });
         }
         [HttpGet]
         public async Task<JsonResult> SelectListOda(bool oda)

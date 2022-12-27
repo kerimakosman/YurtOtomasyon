@@ -78,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <h3 class="mt-3">Oda</h3>
+                            <h3 class="mt-3">Oda ve Ödenecek Tutar</h3>
                             <hr>
 
                             <div class="col-md-4">
@@ -86,11 +86,16 @@
                                     <option class="fw-bold" selected disabled value="">Oda Seciniz</option>
                                 </select>
                             </div>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Ödenecek Tutar" asp-for="OdenecekTutar" required>
+                            </div>
                             
                             <div class="form-button mt-3">
                                 <button id="submit" type="submit" class="btn btn-primary">Kaydet</button>
                                 <div asp-validation-summary="All" class="text text-danger fw-bold"></div>
                             </div>
+
                         </div>
                     </form>
                 </div>

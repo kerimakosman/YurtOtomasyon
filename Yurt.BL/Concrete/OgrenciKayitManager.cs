@@ -18,7 +18,7 @@ namespace Yurt.BL.Concrete
 
         public async Task CreateOgrenci(OgrenciKayitInsertVM ogrenci)
         {
-            await _ogrenciRepository.AddAsync(new()
+            Ogrenci ogrenci1 = new()
             {
                 OgrenciAdi = ogrenci.OgrenciAdi,
                 OgrenciSoyadi = ogrenci.OgrenciSoyadi,
@@ -40,10 +40,18 @@ namespace Yurt.BL.Concrete
                 {
                     YurtKayitDetaylari = new HashSet<YurtKayitDetay>()
                     {
-                        new(){OdaId=ogrenci.OdaId}
+                        new()
+                        {
+                            OdaId=ogrenci.OdaId,
+                            OdemePlani =new()
+                            {
+                                OdenecekTutar=ogrenci.OdenecekTutar
+                            }
+                        }
                     }
                 }
-            });
+            };
+            await _ogrenciRepository.AddAsync(ogrenci1);
             var oda = await _odaRepository.GetByIdAsync(ogrenci.OdaId);
             --oda.Doluluk;
 
