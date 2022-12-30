@@ -18,7 +18,6 @@ namespace Yurt.Entites.Context
         public DbSet<YurtKayitDetay> YurtKayitDetays { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<OdemePlani> OdemePlani { get; set; }
-        public DbSet<Taksit> Taksitler { get; set; }
         public DbSet<TaksitOdeme> TaksitOdemeleri { get; set; }
 
 

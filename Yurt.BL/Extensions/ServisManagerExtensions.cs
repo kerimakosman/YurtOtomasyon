@@ -30,7 +30,6 @@ namespace Yurt.BL.Extensions
             services.AddScoped<IYurtKayitMasterRepository, YurtKayitMasterRepository>();
             services.AddScoped<IKullaniciRepository, KullaniciRepository>();
             services.AddScoped<IOdemePlaniRepository, OdemePlaniRepository>();
-            services.AddScoped<ITaksitRepository, TaksitRepository>();
             services.AddScoped<ITaksitOdemeRepository, TaksitOdemeRepository>();
 
 

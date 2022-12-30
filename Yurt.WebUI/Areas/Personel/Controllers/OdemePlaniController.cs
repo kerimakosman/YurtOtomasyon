@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Yurt.BL.Abstract;
+using Yurt.BL.ViewModels.OdemePlaniVM;
 
 namespace Yurt.WebUI.Areas.Personel.Controllers
 {
@@ -20,14 +21,15 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
             return View(await _odemePlaniManager.ListOgrenci());
         }
         [HttpGet("OdemePlani/{id}")]
-        public async Task<IActionResult> CreateOdemePlani()
+        public async Task<IActionResult> CreateOdemePlani(int id)
         {
-            return View();
+            var odemePlani = await _odemePlaniManager.CreateOdemePlani(id);
+            return View(odemePlani);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> CreateOdemePlani()
-        //{
-        //    return View();
-        //}
+        [HttpPost("OdemePlani/{id}")]
+        public async Task<IActionResult> CreateOdemePlani(OdemePlaniCreateVM odemePlani)
+        {
+            return RedirectToAction("CreateOdemePlani");
+        }
     }
 }

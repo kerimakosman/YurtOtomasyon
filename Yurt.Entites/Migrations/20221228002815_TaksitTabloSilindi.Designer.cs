@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yurt.Entites.Context;
 
@@ -11,9 +12,10 @@ using Yurt.Entites.Context;
 namespace Yurt.Entites.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221228002815_TaksitTabloSilindi")]
+    partial class TaksitTabloSilindi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,13 +133,7 @@ namespace Yurt.Entites.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("YurtKayitDetayId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("YurtKayitDetayId")
-                        .IsUnique();
 
                     b.ToTable("OdemePlani");
                 });
@@ -207,10 +203,7 @@ namespace Yurt.Entites.Migrations
                     b.Property<int>("OdemePlaniId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OdemeTarihi")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Odenen")
+                    b.Property<decimal>("Odenen")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
@@ -220,7 +213,7 @@ namespace Yurt.Entites.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Tutar")
+                    b.Property<decimal>("Tutar")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -298,6 +291,9 @@ namespace Yurt.Entites.Migrations
                     b.Property<int>("OdaId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OdemePlaniId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -310,6 +306,9 @@ namespace Yurt.Entites.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OdaId");
+
+                    b.HasIndex("OdemePlaniId")
+                        .IsUnique();
 
                     b.HasIndex("YurtKayitMasterId");
 
@@ -347,17 +346,6 @@ namespace Yurt.Entites.Migrations
                     b.ToTable("YurtKayitMasters");
                 });
 
-            modelBuilder.Entity("Yurt.Entites.Entities.Concrete.OdemePlani", b =>
-                {
-                    b.HasOne("Yurt.Entites.Entities.Concrete.YurtKayitDetay", "YurtKayitDetay")
-                        .WithOne("OdemePlani")
-                        .HasForeignKey("Yurt.Entites.Entities.Concrete.OdemePlani", "YurtKayitDetayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("YurtKayitDetay");
-                });
-
             modelBuilder.Entity("Yurt.Entites.Entities.Concrete.TaksitOdeme", b =>
                 {
                     b.HasOne("Yurt.Entites.Entities.Concrete.OdemePlani", "OdemePlani")
@@ -388,6 +376,12 @@ namespace Yurt.Entites.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Yurt.Entites.Entities.Concrete.OdemePlani", "OdemePlani")
+                        .WithOne("YurtKayitDetay")
+                        .HasForeignKey("Yurt.Entites.Entities.Concrete.YurtKayitDetay", "OdemePlaniId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Yurt.Entites.Entities.Concrete.YurtKayitMaster", "YurtKayitMaster")
                         .WithMany("YurtKayitDetaylari")
                         .HasForeignKey("YurtKayitMasterId")
@@ -395,6 +389,8 @@ namespace Yurt.Entites.Migrations
                         .IsRequired();
 
                     b.Navigation("Oda");
+
+                    b.Navigation("OdemePlani");
 
                     b.Navigation("YurtKayitMaster");
                 });
@@ -418,6 +414,9 @@ namespace Yurt.Entites.Migrations
             modelBuilder.Entity("Yurt.Entites.Entities.Concrete.OdemePlani", b =>
                 {
                     b.Navigation("TaksitOdemeleri");
+
+                    b.Navigation("YurtKayitDetay")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Yurt.Entites.Entities.Concrete.Ogrenci", b =>
@@ -425,12 +424,6 @@ namespace Yurt.Entites.Migrations
                     b.Navigation("OgrenciVelileri");
 
                     b.Navigation("YurtKayitMaster")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Yurt.Entites.Entities.Concrete.YurtKayitDetay", b =>
-                {
-                    b.Navigation("OdemePlani")
                         .IsRequired();
                 });
 

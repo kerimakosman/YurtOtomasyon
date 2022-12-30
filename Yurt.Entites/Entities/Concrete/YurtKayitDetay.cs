@@ -10,7 +10,7 @@ namespace Yurt.Entites.Entities.Concrete
         public int OdaId { get; set; }
         public Oda Oda { get; set; }
 
-        public int OdemePlaniId { get; set; }
+        //public int OdemePlaniId { get; set; }
         public OdemePlani OdemePlani { get; set; }
     }
 }
