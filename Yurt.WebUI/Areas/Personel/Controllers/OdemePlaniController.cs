@@ -20,16 +20,44 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             return View(await _odemePlaniManager.ListOgrenci());
         }
-        [HttpGet("OdemePlani/{id}")]
-        public async Task<IActionResult> CreateOdemePlani(int id)
+        [HttpGet("OdemePlani/{id}/{ogrid}")]
+        public async Task<IActionResult> CreateOdemePlani(int id, int ogrid)
         {
-            var odemePlani = await _odemePlaniManager.CreateOdemePlani(id);
+            var odemePlani = await _odemePlaniManager.CreateOdemePlaniList(id, ogrid);
             return View(odemePlani);
         }
-        [HttpPost("OdemePlani/{id}")]
+        [HttpPost("OdemePlani/{id}/{ogrid}")]
         public async Task<IActionResult> CreateOdemePlani(OdemePlaniCreateVM odemePlani)
         {
-            return RedirectToAction("CreateOdemePlani");
+            try
+            {
+                await _odemePlaniManager.CreateOdemePlani(odemePlani);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(odemePlani);
+            }
+        }
+        [HttpGet("Odemeler/{id}/{ogrid}")]
+        public IActionResult Odemeler(int id, int ogrid)
+        {
+            var odemelerID = _odemePlaniManager.OdemelerListID(id, ogrid);
+            return View(odemelerID);
+        }
+        [HttpGet]
+        public async Task<JsonResult> OdemelerList(int id, int ogrid)
+        {
+            var odemeler = await _odemePlaniManager.OdemelerList(id, ogrid);
+            return Json(odemeler);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> OdemeYap(int id, decimal odeMiktar)
+        {
+            await _odemePlaniManager.OdemeYap(id, odeMiktar);
+            return Json(true);
         }
     }
 }

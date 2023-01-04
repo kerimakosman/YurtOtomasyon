@@ -45,11 +45,7 @@ namespace Yurt.BL.Concrete
                             OdaId=ogrenci.OdaId,
                             OdemePlani =new()
                             {
-                                OdenecekTutar=ogrenci.OdenecekTutar,
-                                TaksitOdemeleri=new HashSet<TaksitOdeme>()
-                                {
-                                    new() {}
-                                }
+                                OdenecekTutar=ogrenci.OdenecekTutar
                             }
                         }
                     }

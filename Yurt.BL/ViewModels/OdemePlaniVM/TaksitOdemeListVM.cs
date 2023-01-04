@@ -2,6 +2,7 @@
 {
     public class TaksitOdemeListVM
     {
+        public int TaksitOdemeId { get; set; }
         public string? Taksit { get; set; }
         public DateTime? OdemeTarihi { get; set; }
         public decimal? Tutar { get; set; }

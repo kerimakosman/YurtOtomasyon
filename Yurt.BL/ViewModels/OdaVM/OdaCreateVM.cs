@@ -11,7 +11,7 @@ namespace Yurt.BL.ViewModels.OdaVM
         [Range(1, int.MaxValue, ErrorMessage = "Oda kapasitesini doğru girdiğinizden emin olun")]
         public byte Kapasite { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kız-Erkek? zorunlu alan")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "KızOda-ErkekOda zorunlu alan")]
         public bool OdaCinsiyet { get; set; }
 
     }

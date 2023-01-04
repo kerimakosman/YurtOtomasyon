@@ -1,0 +1,143 @@
+﻿@using Yurt.BL.ViewModels.OdemePlaniVM;
+
+@model OdemelerVM
+
+
+<input type="hidden" asp-for="OdemePlaniId" />
+<input type="hidden" asp-for="OgrId" />
+<h2 class="text-center fw-bold">Ödemeler</h2>
+<div class="container py-">
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <div class="card rounded-0 border-0 shadow">
+                <div class="card-body p-5">
+                    <div asp-validation-summary="All" class="alert-danger"></div>
+                    <h2 id="ogrAdSoyad"></h2>
+                    <hr />
+                    <!--  Bootstrap table-->
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered border-primary table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Taksit No</th>
+                                    <th scope="col">Vade Tarih</th>
+                                    <th scope="col">Tutar</th>
+                                    <th scope="col">Ödenen</th>
+                                    <th scope="col">Kalan</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                            <tfoot id="tableFoot"></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@section Scripts{
+    <script type="text/javascript">
+
+        function validateForm() {
+            let taksit = $("#taksit").find(":selected").val();
+            let odenecekTutar = Number(document.getElementById("toplamTutar").value)
+            let _toplamTutar = 0;
+
+            for (i = 1; i <= taksit; i++) {
+                let tutar = Number(document.getElementById("Tutar" + i).value);
+                _toplamTutar += tutar;
+            }
+            if (_toplamTutar != odenecekTutar) {
+                alert("ToplamTutar ile OdenecekTutar aynı değil");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script type="text/javascript">
+        function Veriler() {
+            $('#tableBody').html("");
+            $('#tableFoot').html("");
+            $('#ogrAdSoyad').html("");
+            var ogrPlanId = $("#OdemePlaniId").val();
+            var ogrId = $("#OgrId").val();
+
+            $.ajax({
+                data: { id: ogrPlanId, ogrid: ogrId },
+                url: "/Personel/OdemePlani/OdemelerList",
+                method: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    $('#ogrAdSoyad').append('Öğrenci : ' + data.ogrAdi + ' ' + data.ogrSoyadi);
+
+                    for (let item in data.taksitOdemeleri) {
+                        var taksitOdemeId = data.taksitOdemeleri[item].taksitOdemeId;
+                        var taksit=data.taksitOdemeleri[item].taksit;
+                        var kalan = data.taksitOdemeleri[item].kalan;
+                        var tutar = data.taksitOdemeleri[item].tutar;
+                        var odenen = data.taksitOdemeleri[item].odenen;
+                        var tarih = data.taksitOdemeleri[item].odemeTarihi;
+
+                        var tarih2 = new Date(tarih);
+                        var _tarih = gunAyYil(tarih2);
+                        var liste ='';
+                        if(kalan == 0){var newRow = $("<tr bgcolor=#4eee94>")}
+                        else { var newRow = $("<tr>") };
+                        liste += '<td class="col-md-2 fw-bold">' + taksit + '</td>'
+                        liste+='<td class="col-md-2 fw-bold">' + _tarih + '</td>'
+                        liste += '<td class="col-md-2 fw-bold">' + tutar + '</td>'
+                        liste += '<td class="col-md-2 fw-bold">' + odenen + '</td>'
+                        liste += '<td class="col-md-2 fw-bold">' + kalan + '</td>'
+                        if(kalan > 0){
+                            liste += '<td><div class="input-group"><input type="text" id="txtOde-' + taksitOdemeId + '"class="form-control"/><input class="btn btn-dark" type="button" data-id="' + taksitOdemeId + '"id ="btnOde" value="ÖDE"/></div></td>'
+                        }
+                        else { liste += "<td>✔<b>Ödendi</b></td>" }
+                        
+                        newRow.append(liste);
+                        $('#tableBody').append(newRow);
+                    }
+                    var toplam = '<tr><td class="fw-bolder">TOPLAM</td><td></td><td class="fw-bolder">' + data.toplamOdenecek + '</td><td class="fw-bolder">' + data.toplamOdenen + '</td><td class="fw-bolder">' + data.toplamKalan + '</td><td></td></tr>'
+                    $('#tableFoot').append(toplam);
+                },
+                error: function (ex) {
+                    alert("Beklenmedik Bir Hata Oldu")
+                }
+            })
+        }
+
+        function gunAyYil(tarih) {
+            var yyyy = tarih.getFullYear();
+            var mm = tarih.getMonth() + 1;
+            var dd = tarih.getDate();
+
+            return String((dd < 10 ? "0" : "") + dd + "." + (mm < 10 ? "0" : "") + mm + "." + yyyy)
+        };
+
+        $(document).ready(function () {
+            Veriler();
+
+            $(document).on("click", 'input[type="button"]', function () {
+                var id = $(this).attr("data-id");
+                var odeMiktar = $("#txtOde-" + id).val();
+                $.ajax({
+                    data: { id: id, odeMiktar: odeMiktar },
+                    url: "/Personel/OdemePlani/OdemeYap",
+                    method: "POST",
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#txtOde-" + id).val("");
+                        //alert("Ödeme Başarıyla Yapıldı");
+                        swal("Ödeme Başarıyla Yapıldı!","", "success");
+                        Veriler();
+                    },
+                    error: function (ex) {
+                        swal("Odeme Basarisiz oldu", "", "error");
+                    }
+                })
+            });
+        });
+    </script>
+}

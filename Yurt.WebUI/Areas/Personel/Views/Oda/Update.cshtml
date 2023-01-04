@@ -14,15 +14,24 @@
 
                 <label asp-for="Kapasite">Kapasite</label>
                 <input asp-for="Kapasite" />
-                <button type="submit" class="btn btn-success">Güncelle</button>
+            </div>
+            <div class="form-check form-check-inline mb-3 mt-3"><label class="fw-bold">Oda :</label></div>
+            <div class="form-check form-check-inline mb-3 mt-3">
+                <input class="form-check-input" asp-for="OdaCinsiyet" id="Kadin" type="radio" value="false" />
+                <label class="form-check-label fw-bold" asp-for="OdaCinsiyet" for="Kadin">Kız Odası</label>
+            </div>
+            <div class="form-check form-check-inline mb-3 mt-3">
+                <input class="form-check-input" asp-for="OdaCinsiyet" id="Erkek" type="radio" value="true" />
+                <label class="form-check-label fw-bold" asp-for="OdaCinsiyet" for="Erkek">Erkek Odası</label>
             </div>
             <div><span asp-validation-for="OdaNo" class="text text-danger fw-bold"></span></div>
             <div><span asp-validation-for="Kapasite" class="text text-danger fw-bold"></span></div>
             <div asp-validation-summary="ModelOnly" class="text text-danger fw-bold"></div>
+            <button type="submit" class="btn btn-success">Güncelle</button>
+            <a asp-area="Personel" asp-controller="Oda" asp-action="Index" class="btn btn-secondary">Geri</a>
         </form>
     </div>
 </div>
-<a asp-area="Personel" asp-controller="Oda" asp-action="Index" class="btn btn-secondary">Geri</a>
 
 @section Scripts{
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

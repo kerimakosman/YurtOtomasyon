@@ -127,9 +127,8 @@
 
         $('input[type="radio"]').click(function () {
             var cinsiyet = $(this).val();
-            console.log("secilen Cinsiyet :" + cinsiyet);
             var urldef = "/Personel/OgrenciKayit/SelectListOda";
-            console.log(urldef);
+
             $.ajax({
                 data:{oda:cinsiyet},
                 url: urldef,
@@ -138,8 +137,6 @@
                 success: function (result) {
                     $("#OdaId").children().remove();
                     for (let key in result) {
-                            console.log(result[key].id + "=>" + result[key].odaNo)
-
 
                             $("#OdaId").append("<option value=" + result[key].id + ">" + result[key].odaNo + "</option>");
                     }
