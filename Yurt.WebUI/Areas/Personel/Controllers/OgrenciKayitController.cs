@@ -28,11 +28,22 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
             await _ogrenciKayitManager.CreateOgrenci(ogrenci);
             return RedirectToAction("Index", "OdemePlani", new { Area = "Personel" });
         }
+        [HttpGet("OgrenciKayitGuncelle")]
+        public async Task<IActionResult> OgrenciEdit(int id)
+        {
+            var ogrEdit = await _ogrenciKayitManager.EditOgrenciGet(id);
+            return View(ogrEdit);
+        }
+        [HttpPost("OgrenciKayitGuncelle")]
+        public async Task<IActionResult> OgrenciEdit(OgrenciKayitEditVM ogrenciEdit)
+        {
+            await _ogrenciKayitManager.EditOgrenciPost(ogrenciEdit);
+            return RedirectToAction("Index", "Ogrenci", new { Area = "Personel" });
+        }
         [HttpGet]
         public async Task<JsonResult> SelectListOda(bool oda)
         {
             var kızErkekOda = await _odaManager.KızErkekListOda(oda);
-
             return Json(kızErkekOda);
         }
     }

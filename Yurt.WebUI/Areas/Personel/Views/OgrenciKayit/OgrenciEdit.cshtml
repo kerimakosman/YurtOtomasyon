@@ -1,0 +1,147 @@
+﻿@using Yurt.BL.ViewModels.OgrenciKayitVM;
+@model OgrenciKayitEditVM
+
+@{
+    ViewData["Title"] = "Öğrenci Kayıt Güncelleme";
+}
+
+<link href="~/custom/ogrencikayit.css" rel="stylesheet" />
+
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <form class="requires-validation" method="post" asp-controller="OgrenciKayit" asp-action="OgrenciEdit">
+                        <input type="hidden" asp-for="OgrenciId" />
+                        <input type="hidden" asp-for="VeliId" />
+                        <h2 class="text-center text-white">Öğrenci Kayıt Güncelleme</h2>
+                        <h3>Öğrenci</h3>
+                        <hr>
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Öğrenci Adı" asp-for="OgrenciAdi" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Öğrenci Soyadı" asp-for="OgrenciSoyadi" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Öğrenci Telefon" asp-for="OgrGsm" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Öğrenci TcNo" asp-for="TcNo">
+                            </div>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="email" placeholder="Öğrenci Mail" asp-for="Mail">
+                            </div>
+
+                            <div class="col-md-4 mt-3 row">
+                                <label class="col-form-label col-md-4" asp-for="OgrDogumTarihi">Doğum Tarihi:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control fw-bold" type="date" asp-for="OgrDogumTarihi">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mt-3">
+                                <label class="mb-3 mr-1" asp-for="Cinsiyet">  Cinsiyet :</label>
+
+                                <input type="radio" class="btn-check" asp-for="Cinsiyet" id="Erkek" autocomplete="off" value=true required>
+                                <label class="btn btn-md btn-outline-secondary" for="Erkek" asp-for="Cinsiyet" value="true">Erkek</label>
+
+                                <input type="radio" class="btn-check" asp-for="Cinsiyet" id="Kadin" autocomplete="off" value=false required>
+                                <label class="btn btn-md btn-outline-secondary" for="Kadin" asp-for="Cinsiyet" value="false">Kadın</label>
+                            </div>
+
+                            <h3 class="mt-3">Veli</h3>
+                            <hr>
+
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Yakınlığı" asp-for="VeliKim" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Veli Adi" asp-for="VeliAdi" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Veli Soyadi" asp-for="VeliSoyadi" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control fw-bold" type="text" placeholder="Veli Telefon" asp-for="VeliGsm" required>
+                            </div>
+
+                            <div class="col-md-4 mt-3 row">
+                                <label class="col-form-label col-md-4" asp-for="VeliDogumTarihi">Doğum Tarihi:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control fw-bold" type="date" asp-for="VeliDogumTarihi">
+                                </div>
+                            </div>
+
+                            <h3 class="mt-3">Oda(Diğer Odalar için tekrar cinsiyet seçiniz)</h3>
+                            <hr>
+
+                            <div class="col-md-4">
+                                <select class="form-select fw-bold" asp-for="OdaId" required>
+                                    <option class="fw-bold" selected disabled value="@Model.OdaId">@Model.OdaNo</option>
+                                </select>
+                            </div>
+
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary">Güncelle</button>
+                                <div asp-validation-summary="All" class="text text-danger fw-bold"></div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        (function () {
+            'use strict'
+            const forms = document.querySelectorAll('.requires-validation')
+            Array.from(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        $(document).ready(function () {
+
+            $('input[type="radio"]').click(function () {
+                var cinsiyet = $(this).val();
+                var urldef = "/Personel/OgrenciKayit/SelectListOda";
+
+                $.ajax({
+                    data: { oda: cinsiyet },
+                    url: urldef,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#OdaId").children().remove();
+                        for (let key in result) {
+
+                            $("#OdaId").append("<option value=" + result[key].id + ">" + result[key].odaNo + "</option>");
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+}
+
