@@ -26,7 +26,7 @@ namespace Yurt.BL.Concrete
             _veliRepository = veliRepository;
             _taksitOdemeRepository = taksitOdemeRepository;
         }
-
+        //Odeme Plan Sayfasında öğrenci kayıt olduktan sonra son tarihten ilk tarihe kadar gelecek liste
         public async Task<IList<OdemePlaniListVM>> ListOgrenci()
         {
             var odemeList = from op in _odemePlaniRepository.Table
@@ -48,6 +48,8 @@ namespace Yurt.BL.Concrete
                             };
             return await odemeList.OrderByDescending(op => op.CreateDate).ToListAsync();
         }
+
+        //Odeme Plan sayfasında OdemePlanına giderken asd-route ile odemePlanId ve OgrenciId vererek bi kaç bilgiyi View sayfasına gönderdik
         public async Task<OdemePlaniCreateVM> CreateOdemePlaniList(int id, int ogrid)
         {
             var odemePlani = await _odemePlaniRepository.GetByIdAsync(id);
@@ -58,13 +60,12 @@ namespace Yurt.BL.Concrete
                 OgrId = ogrenci.Id,
                 OgrAdi = ogrenci.OgrenciAdi,
                 OgrSoyadi = ogrenci.OgrenciSoyadi,
-                //TaksitOdemeleri = taksitOdeme,
                 OdemePlaniId = odemePlani.Id,
                 OdenecekTutar = odemePlani.OdenecekTutar
             };
             return odemePlaniCreateVM;
         }
-
+        //Yukarıdan gelen id lerle OdemePlanin taksitlendirmesini oluşturduk
         public async Task CreateOdemePlani(OdemePlaniCreateVM odemePlani)
         {
             var toplamTaksit = odemePlani.Taksit.Count();
@@ -92,17 +93,19 @@ namespace Yurt.BL.Concrete
                     taksitOdeme.Odenen = 0;
                     await _taksitOdemeRepository.AddAsync(taksitOdeme);
                 }
-                //await _taksitOdemeRepository.SaveAsync();
+                await _taksitOdemeRepository.SaveAsync();
             }
             else
             {
                 throw new Exception("ToplamTutar ile ÖdenecekTutar eşit değil");
             }
         }
+        //Odemelerin alınacağı sayfaya asp-route ile odemePlanId ile OgrenciId gönderdik.
         public OdemelerVM OdemelerListID(int id, int ogrid)
         {
             return new() { OdemePlaniId = id, OgrId = ogrid };
         }
+        //Gelen id lerle Ajax ile anlık verileri çekip tabloyu oluşturduk.
         public async Task<OdemelerVM> OdemelerList(int id, int ogrid)
         {
             var taksitOdeme = await _taksitOdemeRepository.Table
@@ -132,6 +135,7 @@ namespace Yurt.BL.Concrete
                 ToplamKalan = taksitOdeme.Sum(to => to.Kalan)
             };
         }
+        //yapılan ödemeleri anlık sayfada Ajax ile güncelliyerek gösterdik..
         public async Task OdemeYap(int id, decimal odeMiktar)
         {
             var taksitOdeme = await _taksitOdemeRepository.GetByIdAsync(id);

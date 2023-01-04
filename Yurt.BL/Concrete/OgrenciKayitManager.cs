@@ -15,7 +15,7 @@ namespace Yurt.BL.Concrete
             _ogrenciRepository = ogrenciRepository;
             _odaRepository = odaRepository;
         }
-
+        //HasSet üzerinden tablolar arası öğrenci ile alakalı bilgiler alınıp kaydedildi. Öğrenci nin cinsiyetine ve odanın dolu-boş olmasına göre ajax üzerinden oda seçimi yapıldı.OdaManager içerisinde method.
         public async Task CreateOgrenci(OgrenciKayitInsertVM ogrenci)
         {
             Ogrenci ogrenci1 = new()

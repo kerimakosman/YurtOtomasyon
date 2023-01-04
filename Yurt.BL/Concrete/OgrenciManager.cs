@@ -45,6 +45,7 @@ namespace Yurt.BL.Concrete
                           join oda in _odaRepository.Table on ykd.OdaId equals oda.Id
                           select new OgrenciListVM
                           {
+                              OgrenciId = o.Id,
                               OgrenciAdi = o.OgrenciAdi,
                               OgrenciSoyadi = o.OgrenciSoyadi,
                               OdaNo = oda.OdaNo

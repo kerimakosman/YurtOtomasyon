@@ -68,6 +68,7 @@ namespace Yurt.BL.Concrete
             await _odaRepository.RemoveAsync(id);
             await _odaRepository.SaveAsync();
         }
+        //Öğrenci cinsiyetine ve odanın dolu-boş olmasına göre oda listesi ÖğrenciKayıt sayfasına ajax ile yönlendirildi
         public async Task<IList<Oda>> KızErkekListOda(bool oda)
         {
             return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda && o.Doluluk > 0);
