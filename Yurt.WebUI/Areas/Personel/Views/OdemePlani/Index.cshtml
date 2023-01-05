@@ -2,37 +2,53 @@
 @{
     ViewData["Title"] = "Öğrenciler";
 }
-
-<h1>Ödeme Planı</h1>
-<hr />
+<link href="~/custom/search.css" rel="stylesheet" />
 
 @model List<OdemePlaniListVM>
 
+<div class="container py-1 mt-4">
+<h1>Ödeme Planı</h1>
+<hr />
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <div class="card rounded-0 border-3 shadow" style="width:80%">
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-end mt-2 mb-3">
+                        <div class="form-group pull-right col-md-3 ">
+                            <input type="text" class="search form-control" placeholder="Arama Yap..">
+                        </div>
+                    </div>
+                    <table class="table table-hower table-bordered border-3 results">
+                        <thead class="table table-warning">
+                            <tr>
+                                <th>Öğrenci Adı-Soyadı</th>
+                                <th>Veli Adı-Soyadı</th>
+                                <th>Oda No</th>
+                                <th class="text-end"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
+                                    <td>@item.VeliAdi @item.VeliSoyadi</td>
+                                    <td>@item.OdaNo</td>
 
-<div class="card col-md-8 style=" width:60%"">
-    <table class="table table-hower">
-        <theader>
-            <tr>
-                <th>Öğrenci Adı-Soyadı</th>
-                <th>Veli Adı-Soyadı</th>
-                <th>Oda No</th>
-                <th class="text-end"></th>
-            </tr>
-        </theader>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
-                    <td>@item.VeliAdi @item.VeliSoyadi</td>
-                    <td>@item.OdaNo</td>
-
-                    <td class="text-end">
-                        <a asp-action="CreateOdemePlani" asp-controller="OdemePlani" asp-area="Personel" asp-route-id="@item.OdemePlaniId" asp-route-ogrid="@item.OgrenciId" class="btn btn-info">Odeme Planı</a>
-                        <a asp-action="Odemeler" asp-controller="OdemePlani" asp-area="Personel" asp-route-id="@item.OdemePlaniId" asp-route-ogrid="@item.OgrenciId" class="btn btn-success">Odeme Al</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                                    <td class="text-end">
+                                        <a asp-action="CreateOdemePlani" asp-controller="OdemePlani" asp-area="Personel" asp-route-id="@item.OdemePlaniId" asp-route-ogrid="@item.OgrenciId" class="btn btn-info">Odeme Planı</a>
+                                        <a asp-action="Odemeler" asp-controller="OdemePlani" asp-area="Personel" asp-route-id="@item.OdemePlaniId" asp-route-ogrid="@item.OgrenciId" class="btn btn-success">Odeme Al</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts{
+    <script src="~/custom/js/search.js"></script>
+ }

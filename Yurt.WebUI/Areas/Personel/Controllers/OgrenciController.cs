@@ -18,5 +18,9 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             return View(await _ogrenciManager.ListOgrenci());
         }
+        public async Task<IActionResult> Test()
+        {
+            return View(await _ogrenciManager.ListOgrenci());
+        }
     }
 }
