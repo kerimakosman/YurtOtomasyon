@@ -54,7 +54,7 @@ namespace Yurt.BL.Concrete
                 //CreateDate tekrar güncellediği için burada AutoMap kullanmaktan vazgeçtim.
                 updateOda.OdaNo = oda.OdaNo;
                 updateOda.Kapasite = oda.Kapasite;
-                updateOda.UpdateDate = DateTime.Now;
+                //updateOda.UpdateDate = DateTime.Now;
                 await _odaRepository.SaveAsync();
             }
             else
