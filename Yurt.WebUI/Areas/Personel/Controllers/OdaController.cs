@@ -70,6 +70,7 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
             ModelState.AddModelError("", "Kayıt Başarısız");
             return View(oda);
         }
+
         public async Task<IActionResult> Delete(int id)
         {
             await _odaManager.RemoveOda(id);

@@ -11,40 +11,92 @@
         <div class="col-lg-12 mx-auto">
             <div class="card rounded-0 border-3 shadow">
                 <div class="card-body p-3">
-<a class="btn btn-primary" asp-action="Create" asp-controller="Oda" asp-area="Personel">Yeni Oda Ekle</a>
-<table class="table table-hower">
-    <theader>
-        <tr>
-            <th>Id</th>
-            <th>Oda No</th>
-            <th>Kapasite</th>
-            <th>CreateDate</th>
-            <th>Doluluk</th>
-            <th>Kız-Erkek</th>
-            <th></th>
-        </tr>
-    </theader>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.OdaNo</td>
-                <td>@item.Kapasite</td>
-                <td>@item.CreateDate.ToShortDateString()</td>
-                <td>@item.Doluluk</td>
-                <td>@(item.OdaCinsiyet==true? "Erkek":"Kadın")</td>
+                    <a class="btn btn-primary" asp-action="Create" asp-controller="Oda" asp-area="Personel">Yeni Oda Ekle</a>
+                    <table class="table table-hower">
+                        <theader>
+                            <tr>
+                                <th>Id</th>
+                                <th>Oda No</th>
+                                <th>Kapasite</th>
+                                <th>CreateDate</th>
+                                <th>Doluluk</th>
+                                <th>Kız-Erkek</th>
+                                <th></th>
+                            </tr>
+                        </theader>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td id="oda-@item.Id">@item.OdaNo</td>
+                                    <td>@item.Kapasite</td>
+                                    <td>@item.CreateDate.ToShortDateString()</td>
+                                    <td>@item.Doluluk</td>
+                                    <td>@(item.OdaCinsiyet == true ? "Erkek" : "Kadın")</td>
 
-                <td>
-                    <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
-                    <a asp-action="Delete" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-danger">X</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                                    <td>
+                                        <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
+                                        <a  name="@item.Id" class="btn btn-danger sil">X</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".sil").click(function(){
+                var id = $(this).attr('name');
+                var odaNo=$("#oda-"+id).text();
+                console.log("id  :" + id);
+                console.log("odaNo  :" + odaNo);
+                swal({
+                    closeOnClickOutside: false,
+                    title: "Emin Misin?",
+                    text: odaNo + " Nolu odayı silmek istedğinizden",
+                    icon:"warning",
+                    dangerMode:true,
+                    buttons:{
+                    confirm:{
+                            text: "Evet",
+                            visible: true,
+                            className: "btn btn-success",
+                            closeModal: true,
+                    },
+                    cancel:{
+                            text: "Hayır",
+                            visible: true,
+                            className: "btn btn-danger",
+                            closeModal: true,
+                    }
+                    },
+                }).then((willDelete) => {
+                    if(willDelete) {
+                        $.ajax({
+                            data: { id: id },
+                            url: "/Personel/Oda/Delete/" + id,
+                            method: 'GET',
+                            success: function (result) {
+                                swal(odaNo + " Nolu oda başarıyla silindi", {
+                                    icon: "success",
+                                    button: false,
+                                });
+                            }
+                        });
+                        $(this).parent('td').parent('tr').remove();
+                    } 
+                    else {
+                    swal("İşlem sonlandırıldı", { button: false});
+                    }
+                });
+            })
+        });
+    </script>
+}

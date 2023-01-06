@@ -37,7 +37,6 @@
     </div>
 </div>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @section Scripts{
     <script type="text/javascript">
 
@@ -75,7 +74,7 @@
 
                     for (let item in data.taksitOdemeleri) {
                         var taksitOdemeId = data.taksitOdemeleri[item].taksitOdemeId;
-                        var taksit=data.taksitOdemeleri[item].taksit;
+                        var taksit = data.taksitOdemeleri[item].taksit;
                         var kalan = data.taksitOdemeleri[item].kalan;
                         var tutar = data.taksitOdemeleri[item].tutar;
                         var odenen = data.taksitOdemeleri[item].odenen;
@@ -83,19 +82,19 @@
 
                         var tarih2 = new Date(tarih);
                         var _tarih = gunAyYil(tarih2);
-                        var liste ='';
-                        if(kalan == 0){var newRow = $("<tr bgcolor=#4eee94>")}
+                        var liste = '';
+                        if (kalan == 0) { var newRow = $("<tr bgcolor=#4eee94>") }
                         else { var newRow = $("<tr>") };
                         liste += '<td class="col-md-2 fw-bold">' + taksit + '</td>'
-                        liste+='<td class="col-md-2 fw-bold">' + _tarih + '</td>'
+                        liste += '<td class="col-md-2 fw-bold">' + _tarih + '</td>'
                         liste += '<td class="col-md-2 fw-bold">' + tutar + '</td>'
                         liste += '<td class="col-md-2 fw-bold">' + odenen + '</td>'
                         liste += '<td class="col-md-2 fw-bold">' + kalan + '</td>'
-                        if(kalan > 0){
+                        if (kalan > 0) {
                             liste += '<td><div class="input-group"><input type="text" id="txtOde-' + taksitOdemeId + '"class="form-control"/><input class="btn btn-dark" type="button" data-id="' + taksitOdemeId + '"id ="btnOde" value="ÖDE"/></div></td>'
                         }
                         else { liste += "<td>✔<b>Ödendi</b></td>" }
-                        
+
                         newRow.append(liste);
                         $('#tableBody').append(newRow);
                     }
@@ -130,8 +129,13 @@
                     success: function (result) {
                         $("#txtOde-" + id).val("");
                         //alert("Ödeme Başarıyla Yapıldı");
-                        swal("Ödeme Başarıyla Yapıldı!","", "success");
-                        Veriler();
+                        swal({
+                            title: "Ödeme Başarıyla Yapıldı!",
+                            text: " ",
+                            icon: "success",
+                            button: false
+                        });
+                        Veriler(); //yukarıda en başta tanımladığımız fonksiyon..
                     },
                     error: function (ex) {
                         swal("Odeme Basarisiz oldu", "", "error");
