@@ -187,7 +187,7 @@
                         $("#mail").text(result.mail);
                         $("#cinsiyet").text(result.cinsiyet==true?"Erkek":"Kadin");
                         $("#veliKim").text(result.veliKim);
-                        $("#veliAdSoyad").text(result.veliAdi + " " + result.veliSoyadi);
+                        $("#veliAdSoyad").text("Veli : "+result.veliAdi + " " + result.veliSoyadi);
                         $("#veliTel").text(result.veliTel);
                     },
                     error: function (ex) {
