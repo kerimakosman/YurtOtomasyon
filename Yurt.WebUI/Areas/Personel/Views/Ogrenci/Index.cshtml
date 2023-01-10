@@ -35,11 +35,11 @@
                             {
                                 <tr>
                                     <td id="ogr-@item.OgrenciId">@item.OgrenciAdi @item.OgrenciSoyadi</td>
-                                    <td>@item.OdaNo</td>
+                                    <td id="oda-@item.OgrenciId">@item.OdaNo</td>
 
                                     <td class="td-actions">
 
-                                        <button type="button" rel="tooltip" class="btn btn-success btn-round btn-just-icon btn-sm" title="Detay">
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-round btn-just-icon btn-sm detay" title="Detay" data-bs-toggle="modal" data-bs-target="#exampleModal" name="@item.OgrenciId">
                                             <i class="material-icons">person</i>
                                         </button>
                                         <a rel="tooltip" class="btn btn-info btn-round btn-just-icon btn-sm" title="Güncelle" asp-action="OgrenciEdit" asp-controller="OgrenciKayit" asp-area="Personel" asp-route-id="@item.OgrenciId"><i class="material-icons">edit</i></a>
@@ -56,17 +56,77 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-md-2">Oda No</th>
+                                <td scope="col" class="col-md-4" id="odaNo"></td>
+                                <th scope="col" class="col-md-2">Öğrenci Tel</th>
+                                <td scope="col" class="col-md-4" id="ogrenciTel"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="col-md-2">Doğum Tarihi</th>
+                                <td scope="col" class="col-md-4" id="dogumTarihi"></td>
+                                <th scope="col" class="col-md-2">TcNo</th>
+                                <td scope="col" class="col-md-4" id="tcNo"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="col-md-2">Mail</th>
+                                <td scope="col" class="col-md-4" id="mail"></td>
+                                <th scope="col" class="col-md-2">Cinsiyet</th>
+                                <td scope="col" class="col-md-4" id="cinsiyet"></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <h1 class="modal-title fs-5" id="veliAdSoyad"></h1><hr />
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-md-2">Yakınlığı</th>
+                                <td scope="col" class="col-md-4" id="veliKim"></td>
+                                <th scope="col" class="col-md-2">Telefon</th>
+                                <td scope="col" class="col-md-4" id="veliTel"></td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
 
     <script src="~/custom/js/search.js"></script>
     <script type="text/javascript">
 
+        function gunAyYil(tarih) {
+            var _tarih = new Date(tarih);
+
+            var yyyy = _tarih.getFullYear();
+            var mm = _tarih.getMonth() + 1;
+            var dd = _tarih.getDate();
+
+            return String((dd < 10 ? "0" : "") + dd + "." + (mm < 10 ? "0" : "") + mm + "." + yyyy)
+        };
+        
         $(document).ready(function () {
             $(".sil").click(function () {
                 var id = $(this).attr('name');
                 var ogrAdSoyad = $("#ogr-" + id).text();
-                console.log("id  :" + id);
-                console.log("ogrAdSoyad  :" + ogrAdSoyad);
                 swal({
                     closeOnClickOutside: false,
                     title: "Emin Misin?",
@@ -106,6 +166,34 @@
                         swal("İşlem Sonlandırıldı", { button: false });
                     }
                 });
+            })
+
+            $(".detay").click(function () {
+                var id = $(this).attr('name');
+                var ogrAdSoyad = $("#ogr-" + id).text();
+                var odaNo = $("#oda-" + id).text();
+
+                $.ajax({
+                    data: { id: id },
+                    url: "/Personel/Ogrenci/DetayOgrenci",
+                    method: "GET",
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#exampleModalLabel").text("Öğrenci : " + ogrAdSoyad);
+                        $("#odaNo").text(odaNo);
+                        $("#ogrenciTel").text(result.ogrTel);
+                        $("#dogumTarihi").text(gunAyYil(result.ogrDogumTarihi));
+                        $("#tcNo").text(result.tcNo);
+                        $("#mail").text(result.mail);
+                        $("#cinsiyet").text(result.cinsiyet==true?"Erkek":"Kadin");
+                        $("#veliKim").text(result.veliKim);
+                        $("#veliAdSoyad").text(result.veliAdi + " " + result.veliSoyadi);
+                        $("#veliTel").text(result.veliTel);
+                    },
+                    error: function (ex) {
+                        alert("Beklenmedik Bir Hata Oldu")
+                    }
+                })
             })
         });
 

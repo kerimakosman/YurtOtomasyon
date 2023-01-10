@@ -53,6 +53,35 @@ namespace Yurt.BL.Concrete
             return await ogrenci.ToListAsync();
         }
 
+        //Ajax ile veriler çekilip öğrenci detaylari modalın içerisine yazdırıldı
+        public async Task<OgrenciDetayListVM> OgrenciDetayList(int id)
+        {
+            var ogrenci = await _ogrenciRepository.Table.Include(ogr => ogr.OgrenciVelileri)
+                              .Include(ogr => ogr.YurtKayitMaster)
+                              .ThenInclude(ykm => ykm.YurtKayitDetaylari)
+                              .ThenInclude(ykd => ykd.Oda)
+                              .FirstOrDefaultAsync(ogr => ogr.Id == id);
+            if (ogrenci != null)
+            {
+                OgrenciDetayListVM ogrDetay = new();
+                ogrDetay.OgrTel = ogrenci.Gsm;
+                ogrDetay.OgrDogumTarihi = ogrenci.DogumTarihi;
+                ogrDetay.TcNo = ogrenci.TcNo;
+                ogrDetay.Mail = ogrenci.Mail;
+                ogrDetay.Cinsiyet = ogrenci.Cinsiyet;
+                foreach (var item in ogrenci.OgrenciVelileri)
+                {
+                    ogrDetay.VeliKim = item.VeliKim;
+                    ogrDetay.VeliAdi = item.VeliAdi;
+                    ogrDetay.VeliSoyadi = item.VeliSoyadi;
+                    ogrDetay.VeliTel = item.Gsm;
+                    ogrDetay.VeliDogumTarihi = item.DogumTarihi;
+                }
+                return ogrDetay;
+            }
+            throw new Exception("Beklenmedil Bir Hata");
+        }
+
         public async Task RemoveOgrenci(int id)
         {
             await _ogrenciRepository.RemoveAsync(id);
