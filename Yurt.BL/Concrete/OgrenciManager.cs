@@ -52,5 +52,11 @@ namespace Yurt.BL.Concrete
                           };
             return await ogrenci.ToListAsync();
         }
+
+        public async Task RemoveOgrenci(int id)
+        {
+            await _ogrenciRepository.RemoveAsync(id);
+            await _ogrenciRepository.SaveAsync();
+        }
     }
 }

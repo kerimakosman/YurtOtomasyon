@@ -34,7 +34,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
+                                    <td id="ogr-@item.OgrenciId">@item.OgrenciAdi @item.OgrenciSoyadi</td>
                                     <td>@item.OdaNo</td>
 
                                     <td class="td-actions">
@@ -43,7 +43,7 @@
                                             <i class="material-icons">person</i>
                                         </button>
                                         <a rel="tooltip" class="btn btn-info btn-round btn-just-icon btn-sm" title="Güncelle" asp-action="OgrenciEdit" asp-controller="OgrenciKayit" asp-area="Personel" asp-route-id="@item.OgrenciId"><i class="material-icons">edit</i></a>
-                                        <button type="button" rel="tooltip" class="btn btn-danger btn-round btn-just-icon btn-sm" title="Sil">
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-round btn-just-icon btn-sm sil" title="Sil" name="@item.OgrenciId">
                                             <i class="material-icons">close</i>
                                         </button>
                                     </td>
@@ -59,5 +59,55 @@
 @section Scripts{
 
     <script src="~/custom/js/search.js"></script>
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+            $(".sil").click(function () {
+                var id = $(this).attr('name');
+                var ogrAdSoyad = $("#ogr-" + id).text();
+                console.log("id  :" + id);
+                console.log("ogrAdSoyad  :" + ogrAdSoyad);
+                swal({
+                    closeOnClickOutside: false,
+                    title: "Emin Misin?",
+                    text: ogrAdSoyad + " isimli öğrenciyi silmek istediğinizden",
+                    icon: "warning",
+                    dangerMode: true,
+                    buttons: {
+                        confirm: {
+                            text: "Evet",
+                            visible: true,
+                            className: "btn btn-success",
+                            closeModal: true,
+                        },
+                        cancel: {
+                            text: "Hayır",
+                            visible: true,
+                            className: "btn btn-danger",
+                            closeModal: true,
+                        }
+                    },
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            data: { id: id },
+                            url: "/Personel/Ogrenci/OgrenciDelete/" + id,
+                            method: 'GET',
+                            success: function (result) {
+                                swal(ogrAdSoyad + " isimli öğrenci başarıyla silindi", {
+                                    icon: "success",
+                                    button: false,
+                                });
+                            }
+                        });
+                        $(this).parent('td').parent('tr').remove();
+                    }
+                    else {
+                        swal("İşlem Sonlandırıldı", { button: false });
+                    }
+                });
+            })
+        });
+
+    </script>
  }

@@ -18,9 +18,10 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             return View(await _ogrenciManager.ListOgrenci());
         }
-        public async Task<IActionResult> Test()
+        public async Task<IActionResult> OgrenciDelete(int id)
         {
-            return View(await _ogrenciManager.ListOgrenci());
+            await _ogrenciManager.RemoveOgrenci(id);
+            return RedirectToAction("Index");
         }
     }
 }

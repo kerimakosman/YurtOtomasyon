@@ -55,12 +55,11 @@
             $(".sil").click(function(){
                 var id = $(this).attr('name');
                 var odaNo=$("#oda-"+id).text();
-                console.log("id  :" + id);
-                console.log("odaNo  :" + odaNo);
+
                 swal({
                     closeOnClickOutside: false,
                     title: "Emin Misin?",
-                    text: odaNo + " Nolu odayı silmek istedğinizden",
+                    text: odaNo + " Nolu odayı silmek istediğinizden",
                     icon:"warning",
                     dangerMode:true,
                     buttons:{
@@ -93,7 +92,7 @@
                         $(this).parent('td').parent('tr').remove();
                     } 
                     else {
-                    swal("İşlem sonlandırıldı", { button: false});
+                    swal("İşlem Sonlandırıldı", { button: false});
                     }
                 });
             })
