@@ -18,5 +18,10 @@ namespace Yurt.WebUI.Areas.Personel.Controllers
         {
             return View(await _veliManager.ListVeli());
         }
+        public async Task<JsonResult> OgrenciBilgi(int id)
+        {
+            var result = await _veliManager.veli_OgrenciDetay(id);
+            return Json(result);
+        }
     }
 }

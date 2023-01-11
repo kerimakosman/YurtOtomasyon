@@ -79,7 +79,7 @@ namespace Yurt.BL.Concrete
                 }
                 return ogrDetay;
             }
-            throw new Exception("Beklenmedil Bir Hata");
+            throw new Exception("Beklenmedik Bir Hata");
         }
 
         public async Task RemoveOgrenci(int id)

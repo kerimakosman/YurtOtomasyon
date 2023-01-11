@@ -24,10 +24,35 @@ namespace Yurt.BL.Concrete
                            VeliKim = v.VeliKim,
                            VeliAdi = v.VeliAdi,
                            VeliSoyadi = v.VeliSoyadi,
+                           VeliGsm = v.Gsm,
+                           OgrenciId = o.Id,
                            OgrenciAdi = o.OgrenciAdi,
                            OgrenciSoyadi = o.OgrenciSoyadi
                        };
             return await veli.ToListAsync();
+        }
+
+        public async Task<Veli_OgrenciDetayVM> veli_OgrenciDetay(int id)
+        {
+            var ogrenci = await _ogrenciRepository.Table.Include(ogr => ogr.OgrenciVelileri)
+                              .Include(ogr => ogr.YurtKayitMaster)
+                              .ThenInclude(ykm => ykm.YurtKayitDetaylari)
+                              .ThenInclude(ykd => ykd.Oda)
+                              .FirstOrDefaultAsync(ogr => ogr.Id == id);
+            if (ogrenci != null)
+            {
+                Veli_OgrenciDetayVM ogrDetay = new();
+                ogrDetay.OgrGsm = ogrenci.Gsm;
+                ogrDetay.DogumTarihi = ogrenci.DogumTarihi;
+                ogrDetay.OgrTcNo = ogrenci.TcNo;
+
+                foreach (var item in ogrenci.YurtKayitMaster.YurtKayitDetaylari)
+                {
+                    ogrDetay.OdaNo = item.Oda.OdaNo;
+                }
+                return ogrDetay;
+            }
+            throw new Exception("Beklenmedik Bir Hata");
         }
     }
 }

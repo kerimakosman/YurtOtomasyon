@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Yakınlığı</th>
                                 <th>Veli Adı-Soyadı</th>
+                                <th>Veli Telefon</th>
                                 <th>Öğrenci Adı-Soyadı</th>
                             </tr>
                         </thead>
@@ -33,7 +34,10 @@
                                 <tr>
                                     <td class="fw-bold">@item.VeliKim</td>
                                     <td>@item.VeliAdi @item.VeliSoyadi</td>
-                                    <td>@item.OgrenciAdi @item.OgrenciSoyadi</td>
+                                    <td>@item.VeliGsm</td>
+                                    <td>
+                                        <a class="link-dark detay" data-bs-toggle="modal" data-bs-target="#exampleModal" name="@item.OgrenciId">@item.OgrenciAdi @item.OgrenciSoyadi</a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -44,6 +48,80 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-md-2">Oda No</th>
+                                <td scope="col" class="col-md-4" id="odaNo"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="col-md-2">Öğrenci Tel</th>
+                                <td scope="col" class="col-md-4" id="ogrenciTel"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="col-md-2">TcNo</th>
+                                <td scope="col" class="col-md-4" id="tcNo"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="col-md-2">Doğum Tarihi</th>
+                                <td scope="col" class="col-md-4" id="dogumTarihi"></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script src="~/custom/js/search.js"></script>
+    <script type="text/javascript">
+
+        function gunAyYil(tarih) {
+            var _tarih = new Date(tarih);
+
+            var yyyy = _tarih.getFullYear();
+            var mm = _tarih.getMonth() + 1;
+            var dd = _tarih.getDate();
+
+            return String((dd < 10 ? "0" : "") + dd + "." + (mm < 10 ? "0" : "") + mm + "." + yyyy)
+        };
+
+        $(document).ready(function () {
+            
+            $(".detay").click(function () {
+                var id = $(this).attr('name');
+                var ogrAdSoyad = $(this).text();
+                console.log("id :"+id);
+                console.log("ogrAdSoyad :" + ogrAdSoyad);
+                $.ajax({
+                    data: { id: id },
+                    url: "/Personel/Veli/OgrenciBilgi",
+                    method: "GET",
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#exampleModalLabel").text("Öğrenci : " + ogrAdSoyad);
+                        $("#odaNo").text(result.odaNo);
+                        $("#ogrenciTel").text(result.ogrGsm);
+                        $("#dogumTarihi").text(gunAyYil(result.dogumTarihi));
+                        $("#tcNo").text(result.ogrTcNo);
+                    },
+                    error: function (ex) {
+                        alert("Beklenmedik Bir Hata Oldu")
+                    }
+                })
+            })
+
+        })
+    </script>
  }
