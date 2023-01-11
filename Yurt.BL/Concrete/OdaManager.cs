@@ -16,9 +16,13 @@ namespace Yurt.BL.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IList<Oda>> ListOda()
+        public async Task<OdaKız_ErkekListVM> ListOda()
         {
-            return await _odaRepository.GetAllAsync();
+            return new()
+            {
+                ErkekOdalari = await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == true),
+                KizOdalari = await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == false)
+            };
         }
 
         public async Task CreateOda(OdaCreateVM oda)
@@ -32,7 +36,7 @@ namespace Yurt.BL.Concrete
             else
             {
                 var createOda = _mapper.Map<Oda>(oda);
-                createOda.Doluluk = oda.Kapasite;
+                createOda.BosYatak = oda.Kapasite;
                 await _odaRepository.AddAsync(createOda);
                 await _odaRepository.SaveAsync();
             }
@@ -55,6 +59,7 @@ namespace Yurt.BL.Concrete
 
                 updateOda.OdaNo = oda.OdaNo;
                 updateOda.Kapasite = oda.Kapasite;
+                updateOda.OdaCinsiyet = oda.OdaCinsiyet;
                 //updateOda.UpdateDate = DateTime.Now;
                 await _odaRepository.SaveAsync();
             }
@@ -72,7 +77,7 @@ namespace Yurt.BL.Concrete
         //Öğrenci cinsiyetine ve odanın dolu-boş olmasına göre oda listesi ÖğrenciKayıt sayfasına ajax ile yönlendirildi
         public async Task<IList<Oda>> KızErkekListOda(bool oda)
         {
-            return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda && o.Doluluk > 0);
+            return await _odaRepository.GetAllAsync(o => o.OdaCinsiyet == oda && o.BosYatak > 0);
         }
     }
 }

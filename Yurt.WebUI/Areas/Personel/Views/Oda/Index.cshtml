@@ -1,83 +1,130 @@
-﻿@{
+﻿@using Yurt.BL.ViewModels.OdaVM;
+@{
     ViewData["Title"] = "Odalar";
 }
+@model OdaKız_ErkekListVM
 
-<h1>ODALAR</h1>
-<hr />
+<link href="~/custom/crud-icon.css" rel="stylesheet" />
+<style>
+    .erkek {
+        text-shadow: 0px 0px 10px black;
+        font-size: x-large;
+        font-family: Comic Sans MS;
+        color: green;
+        text-align: center;
+    }
 
-@model ICollection<Oda>
+    .kız {
+        text-shadow: 0px 0px 10px black;
+        font-size: x-large;
+        font-family: Comic Sans MS;
+        color: crimson;
+        text-align: center;
+    }
+</style>
+
 <div class="container py-1 mt-4">
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Oda" asp-area="Personel">Yeni Oda Ekle</a>
     <div class="row">
-        <div class="col-lg-12 mx-auto">
-            <div class="card rounded-0 border-3 shadow">
-                <div class="card-body p-3">
-                    <a class="btn btn-primary" asp-action="Create" asp-controller="Oda" asp-area="Personel">Yeni Oda Ekle</a>
-                    <table class="table table-hower">
-                        <theader>
-                            <tr>
-                                <th>Id</th>
-                                <th>Oda No</th>
-                                <th>Kapasite</th>
-                                <th>CreateDate</th>
-                                <th>Doluluk</th>
-                                <th>Kız-Erkek</th>
-                                <th></th>
-                            </tr>
-                        </theader>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Id</td>
-                                    <td id="oda-@item.Id">@item.OdaNo</td>
-                                    <td>@item.Kapasite</td>
-                                    <td>@item.CreateDate.ToShortDateString()</td>
-                                    <td>@item.Doluluk</td>
-                                    <td>@(item.OdaCinsiyet == true ? "Erkek" : "Kadın")</td>
-
-                                    <td>
-                                        <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info">Guncelle</a>
-                                        <a  name="@item.Id" class="btn btn-danger sil">X</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+        <div class="erkek">Erkek Odaları</div><hr />
+        @foreach (var item in Model.ErkekOdalari)
+        {
+            <div class="card border-success m-3 col-sm-3 text-success" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-success text-center"><h5>Oda No : @item.OdaNo</h5></div>
+                <div class="card-body">
+                    <table class="table border-success table-success text-success">
+                        <tr>
+                            <th scope="row">Kapasite</th>
+                            <td>@item.Kapasite KİŞİLİK</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Boş Yatak</th>
+                            <td>@item.BosYatak</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Dolu Yatak</th>
+                            <td>@(item.Kapasite - item.BosYatak)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Oda Tipi</th>
+                            <td>@(item.OdaCinsiyet==true?"Erkek":"Kız") Odasi</td>
+                        </tr>
                     </table>
                 </div>
+                <div class="card-footer bg-transparent border-success">
+                    <div class="text-center">
+                        <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info btn-just-icon btn-sm" title="Güncelle"><i class="material-icons">edit</i></a>
+                        <a name="@item.Id" class="btn btn-danger btn-just-icon btn-sm sil" title="Sil"><i class="material-icons">close</i></a>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
+
+        <div class="kız">Kız Odaları</div><hr />
+        @foreach (var item in Model.KizOdalari)
+        {
+            <div class="card border-danger m-3 col-sm-3 text-danger" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-danger text-center"><h5>Oda No : @item.OdaNo</h5></div>
+                <div class="card-body">
+                    <table class="table border-danger table-success text-danger">
+                        <tr>
+                            <th scope="row">Kapasite</th>
+                            <td>@item.Kapasite KİŞİLİK</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Boş Yatak</th>
+                            <td>@item.BosYatak</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Dolu Yatak</th>
+                            <td>@(item.Kapasite - item.BosYatak)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Oda Tipi</th>
+                            <td>@(item.OdaCinsiyet == true ? "Erkek" : "Kız") Odasi</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-danger">
+                    <div class="text-center">
+                        <a asp-action="Update" asp-controller="Oda" asp-area="Personel" asp-route-id="@item.Id" class="btn btn-info btn-just-icon btn-sm" title="Güncelle"><i class="material-icons">edit</i></a>
+                        <a name="@item.Id" class="btn btn-danger btn-just-icon btn-sm sil" title="Sil"><i class="material-icons">close</i></a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".sil").click(function(){
+            $(".sil").click(function () {
                 var id = $(this).attr('name');
-                var odaNo=$("#oda-"+id).text();
+                var odaNo = $("#oda-" + id).text();
 
                 swal({
                     closeOnClickOutside: false,
                     title: "Emin Misin?",
                     text: odaNo + " Nolu odayı silmek istediğinizden",
-                    icon:"warning",
-                    dangerMode:true,
-                    buttons:{
-                    confirm:{
+                    icon: "warning",
+                    dangerMode: true,
+                    buttons: {
+                        confirm: {
                             text: "Evet",
                             visible: true,
                             className: "btn btn-success",
                             closeModal: true,
-                    },
-                    cancel:{
+                        },
+                        cancel: {
                             text: "Hayır",
                             visible: true,
                             className: "btn btn-danger",
                             closeModal: true,
-                    }
+                        }
                     },
                 }).then((willDelete) => {
-                    if(willDelete) {
+                    if (willDelete) {
                         $.ajax({
                             data: { id: id },
                             url: "/Personel/Oda/Delete/" + id,
@@ -90,9 +137,9 @@
                             }
                         });
                         $(this).parent('td').parent('tr').remove();
-                    } 
+                    }
                     else {
-                    swal("İşlem Sonlandırıldı", { button: false});
+                        swal("İşlem Sonlandırıldı", { button: false });
                     }
                 });
             })

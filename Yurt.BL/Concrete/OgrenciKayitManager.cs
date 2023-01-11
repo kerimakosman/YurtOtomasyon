@@ -58,7 +58,7 @@ namespace Yurt.BL.Concrete
             };
             await _ogrenciRepository.AddAsync(ogrenci1);
             var oda = await _odaRepository.GetByIdAsync(ogrenci.OdaId);
-            --oda.Doluluk;
+            --oda.BosYatak;
 
             await _ogrenciRepository.SaveAsync();
         }
@@ -121,11 +121,11 @@ namespace Yurt.BL.Concrete
 
             foreach (var item in ogrenci.YurtKayitMaster.YurtKayitDetaylari)
             {
-                ++item.Oda.Doluluk;
+                ++item.Oda.BosYatak;
                 item.OdaId = ogrenciEdit.OdaId;
             }
             var yeniOda = await _odaRepository.GetByIdAsync(ogrenciEdit.OdaId);
-            --yeniOda.Doluluk;
+            --yeniOda.BosYatak;
 
             await _ogrenciRepository.SaveAsync();
         }

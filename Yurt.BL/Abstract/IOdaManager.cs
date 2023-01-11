@@ -5,7 +5,7 @@ namespace Yurt.BL.Abstract
 {
     public interface IOdaManager
     {
-        Task<IList<Oda>> ListOda();
+        Task<OdaKız_ErkekListVM> ListOda();
         Task CreateOda(OdaCreateVM oda);
         Task<OdaUpdateVM> GetByIdAsync(int id);
         Task UpdateOda(OdaUpdateVM oda);
